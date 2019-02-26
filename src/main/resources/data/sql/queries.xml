@@ -1,0 +1,12 @@
+<sql>
+	<query name="usuario.buscar.pelo.login"><![CDATA[
+		SELECT *
+		FROM usuarios
+		WHERE email = ?
+		AND   senha = ?
+	]]></query>
+	<query name="usuario.criar"><![CDATA[
+		INSERT INTO USUARIOS (nome, email, telefone, senha)
+		VALUES (?, ?, ?, ?)
+	]]></query>
+</sql>
