@@ -1,6 +1,6 @@
 package br.com.evisas.entity;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class SolicitacaoDeDocumento {
 	
@@ -11,10 +11,10 @@ public class SolicitacaoDeDocumento {
 	private long id;
 	private String nomeSolicitante;
 	private String cpfSolicitante;
-	private Date data;
 	private String observacao;
 	private Status status;
 	private String motivoRecusa;
+	private LocalDateTime dataSolicitacao;
 	
 	public long getId() {
 		return id;
@@ -40,14 +40,6 @@ public class SolicitacaoDeDocumento {
 		this.cpfSolicitante = cpfSolicitante;
 	}
 
-	public Date getData() {
-		return data;
-	}
-
-	public void setData(Date data) {
-		this.data = data;
-	}
-
 	public String getObservacao() {
 		return observacao;
 	}
@@ -70,5 +62,13 @@ public class SolicitacaoDeDocumento {
 
 	public void setMotivoRecusa(String motivoRecusa) {
 		this.motivoRecusa = motivoRecusa;
+	}
+
+	public LocalDateTime getDataSolicitacao() {
+		return dataSolicitacao;
+	}
+
+	public void setDataSolicitacao(LocalDateTime dataSolicitacao) {
+		this.dataSolicitacao = dataSolicitacao;
 	}
 }

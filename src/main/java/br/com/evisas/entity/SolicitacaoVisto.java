@@ -1,6 +1,7 @@
 package br.com.evisas.entity;
 
-import java.util.Date;
+import java.io.File;
+import java.time.LocalDate;
 
 import org.springframework.stereotype.Component;
 
@@ -10,8 +11,8 @@ public class SolicitacaoVisto extends SolicitacaoDeDocumento {
 	private String paisDeResidencia;
 	private String paisAVisitar;
 	private boolean possuiPassaporte;
-	private Date dataNascimentoSolicitante;
-	private byte[] documento;
+	private LocalDate dataNascimentoSolicitante;
+	private File documento;
 	
 	public String getPaisDeResidencia() {
 		return paisDeResidencia;
@@ -37,19 +38,19 @@ public class SolicitacaoVisto extends SolicitacaoDeDocumento {
 		this.possuiPassaporte = possuiPassaporte;
 	}
 
-	public Date getDataNascimentoSolicitante() {
+	public LocalDate getDataNascimentoSolicitante() {
 		return dataNascimentoSolicitante;
 	}
 
-	public void setDataNascimentoSolicitante(Date dataNascimentoSolicitante) {
+	public void setDataNascimentoSolicitante(LocalDate dataNascimentoSolicitante) {
 		this.dataNascimentoSolicitante = dataNascimentoSolicitante;
 	}
 
-	public byte[] getDocumento() {
+	public File getDocumento() {
 		return documento;
 	}
 
-	public void setDocumento(byte[] documento) {
+	public void setDocumento(File documento) {
 		this.documento = documento;
 	}
 }
