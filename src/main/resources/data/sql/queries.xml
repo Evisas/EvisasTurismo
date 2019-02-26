@@ -1,12 +1,12 @@
 <sql>
 	<query name="usuario.buscar.pelo.login"><![CDATA[
-		SELECT *
+		SELECT id, nome, email, telefone, senha
 		FROM usuarios
-		WHERE email = ?
-		AND   senha = ?
+		WHERE email = :email
+		AND   senha = :senha
 	]]></query>
 	<query name="usuario.criar"><![CDATA[
-		INSERT INTO USUARIOS (nome, email, telefone, senha)
-		VALUES (?, ?, ?, ?)
+		INSERT INTO usuarios (nome, email, telefone, senha)
+		VALUES (:nome, :email, :telefone, :senha)
 	]]></query>
 </sql>
