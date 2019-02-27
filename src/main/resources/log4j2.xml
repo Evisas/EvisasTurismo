@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Artigo bom ensinando a configurar: "https://www.callicoder.com/spring-boot-log4j-2-example/" -->
+
+<Configuration status="WARN" monitorInterval="30"> <!-- Arquivo de configuração será checado de 30 em 30 segundos (monitorInterval) por modificações -->
+	<Properties>
+		<Property name="LOG_PATTERN"> <!-- Para aprender os patterns: https://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/PatternLayout.html -->
+			%d{yyyy-MM-dd HH:mm:ss.SSS} %5p ${hostName} [%15.15t] %-40.40c{1.} : %m%n
+		</Property>
+		<Property name="diretorio">logs</Property>
+	</Properties>
+	<Appenders>
+		<Console name="ConsoleAppender" target="SYSTEM_OUT" follow="true">
+			<PatternLayout pattern="${LOG_PATTERN}"/>
+		</Console>
+		
+		<!-- Rolling File Appender (obs.: para compactar o arquivo automaticamente, basta acrescentar ".zip" ou ".gz" no final do filePattern) -->
+		<RollingFile name="FileAppender" fileName="${diretorio}/evisas-current-log.log" filePattern="${diretorio}/evisas-%d{yyyy-MM-dd}-%i.log.zip">
+			<PatternLayout>
+				<Pattern>${LOG_PATTERN}</Pattern>
+			</PatternLayout>
+			<Policies>
+				<SizeBasedTriggeringPolicy size="10MB" />  <!-- Tamanho máximo do arquivo de log -->
+				<TimeBasedTriggeringPolicy interval="1" /> <!-- De quantos em quantos dias irá verificar se ultrapassou a quantidade máxima de arquivos de log (todo dia) -->
+			</Policies>
+			<DefaultRolloverStrategy max="10"> <!-- Obs.: 'max' é o máximo de arquivos de log gerados no mesmo pattern (no mesmo dia no nosso caso) -->
+				<Delete basePath="${diretorio}" maxDepth="1"> <!-- Obs.: 'maxDepth' é o número de levels de diretório que vai buscar o arquivo de log -->
+					<IfFileName glob="${diretorio}/evisas-*.log.zip" />
+					<IfLastModified age="30d" />	<!-- age="30d": Deleta os arquivos com esse pattern mais antigos que 30 dias -->
+				</Delete>
+			</DefaultRolloverStrategy>
+		</RollingFile>
+
+		<!-- SMTP Appender (para funcionar, deve existir a dependência "spring-boot-starter-mail" no pom.xml)
+		<SMTP name="MailAppender"
+			  subject="Log4j2 Demo [PROD]"
+			  to="youremail@example.com"
+			  from="log4j2-demo-alerts@example.com"
+			  smtpHost="yourSMTPHost"
+			  smtpPort="587"
+			  smtpUsername="yourSMTPUsername"
+			  smtpPassword="yourSMTPPassword"
+			  bufferSize="1">
+			<ThresholdFilter level="ERROR" onMatch="ACCEPT" onMismatch="DENY"/>
+			<PatternLayout>
+				<Pattern>${LOG_PATTERN}</Pattern>
+			</PatternLayout>
+		</SMTP>
+		 -->
+	</Appenders>
+	<Loggers> <!-- Levels: OFF, FATAL, ERROR, WARN, INFO, DEBUG, TRACE, ALL -->
+
+		<Root level="warn"> <!-- Loga tudo do servidor, a partir do level de log citado, nos appenders citados (no console e no arquivo de log) -->
+			<AppenderRef ref="ConsoleAppender" />
+			<AppenderRef ref="FileAppender"/>
+		</Root>
+
+		<Logger name="br.com.evisas" level="trace" additivity="false"> <!-- Loga todo log do path citado, a partir do level de log citado, nos appenders citados (no console e no arquivo de log) -->
+			<AppenderRef ref="ConsoleAppender" />
+			<AppenderRef ref="FileAppender"/>
+		</Logger>
+
+		<!-- LOG ASSÍNCRONO: muito mais performático (para funcionar, deve existir a dependência "disruptor" no pom.xml)
+		<AsyncLogger name="br.com.evisas" level="debug" additivity="false">
+			<AppenderRef ref="ConsoleAppender" />
+			<AppenderRef ref="FileAppender" />
+		</AsyncLogger>
+	 	-->
+	 	
+	</Loggers>
+</Configuration>
