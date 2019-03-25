@@ -5,6 +5,11 @@
 		WHERE email = :email
 		AND   senha = :senha
 	]]></query>
+	<query name="usuario.buscar.pelo.email"><![CDATA[
+		SELECT id, nome, email, telefone, senha
+		FROM usuarios
+		WHERE email = :email
+	]]></query>
 	<query name="usuario.criar"><![CDATA[
 		INSERT INTO usuarios (nome, email, telefone, senha)
 		VALUES (:nome, :email, :telefone, :senha)

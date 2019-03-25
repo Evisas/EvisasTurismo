@@ -17,25 +17,25 @@
 	</div>
 	<div id="content" class="container text-center">
 		
-		<spring:hasBindErrors name="usuario">
-			<c:set var="voltouDoServidorComErrosValidacao">${not empty errors}</c:set>
-		</spring:hasBindErrors>
-		
-		<form:form methodParam="post" action="logar" modelAttribute="usuario" cssClass="form form-login rounded-lg ${voltouDoServidorComErrosValidacao ? 'was-validated':''}" novalidate="true">
+		<form:form methodParam="post" action="logar" modelAttribute="usuario" cssClass="form form-login rounded-lg" novalidate="true">
 			<div class="text-left">
 				<div class="form-group">
+				<spring:bind path="email">
 					<label for="email">Email:</label><br />
 					<form:input type="email" id="email" path="email" placeholder="Digite seu email"
-					maxlength="40" cssClass="form-control" required="required"/>
+					maxlength="40" cssClass="form-control ${status.error ? 'is-invalid':''}" required="required"/>
 					<div class="invalid-feedback"><form:errors path="email" /></div>
+				</spring:bind>
 				</div>
 				
 				<div class="form-group">
+				<spring:bind path="senha">
 					<label for="senha">Senha:</label><br />
 					<form:input type="password" id="senha" path="senha" placeholder="Digite sua Senha"
-					minlength="4" maxlength="15" cssClass="form-control" required="required"/>
+					minlength="4" maxlength="15" cssClass="form-control ${status.error ? 'is-invalid':''}" required="required"/>
 					<div class="invalid-feedback"><form:errors path="senha" /></div>
 					<a href="reenvioDeSenha">Esqueceu sua senha?</a>
+				</spring:bind>
 				</div>
 				
 			</div>

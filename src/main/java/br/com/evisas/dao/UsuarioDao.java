@@ -6,4 +6,5 @@ public interface UsuarioDao {
 
 	public long criar(Usuario usuario);
 	public Usuario buscarPeloLogin(Usuario usuario);
+	public Usuario buscarPeloEmail(String email);
 }

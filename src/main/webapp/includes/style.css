@@ -23,7 +23,7 @@ div.messages div
 	max-width: 250pt;
 	margin: auto;
 }
-.form-cadastro
+.form-cadastro, .form-reenvio-senha
 {
 	max-width: 450pt;
 	margin: 15pt auto 0 auto;

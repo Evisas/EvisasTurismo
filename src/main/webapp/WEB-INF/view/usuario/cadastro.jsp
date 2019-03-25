@@ -15,11 +15,13 @@
 		<c:if test="${not empty codigoMsgSucesso}">
 			<div class="alert alert-success text-center"><spring:message code='${codigoMsgSucesso}' text="" /></div>
 		</c:if>
-
+		
+		<%-- 
 		<spring:hasBindErrors name="usuario">
 			<c:set var="voltouDoServidorComErrosValidacao">${not empty errors}</c:set>
 		</spring:hasBindErrors>
-
+		--%>
+		
 		<form:form methodParam="post" action="cadastrar" modelAttribute="usuario" class="form form-cadastro rounded-lg" novalidate="true">
 			<div class="text-left">
 			

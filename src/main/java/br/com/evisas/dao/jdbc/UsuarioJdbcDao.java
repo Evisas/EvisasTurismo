@@ -59,5 +59,13 @@ public class UsuarioJdbcDao implements UsuarioDao {
 		List<Usuario> usuarios = jdbcTemplate.query(QueryUtil.getQueryByName("usuario.buscar.pelo.login"), parameters, USUARIO_ROW_MAPPER);
 		return usuarios.isEmpty() ? null : usuarios.get(0);
 	}
-	
+
+	@Override
+	public Usuario buscarPeloEmail(String email) {
+		MapSqlParameterSource parameters = new MapSqlParameterSource();
+		parameters.addValue("email", email);
+		
+		List<Usuario> usuarios = jdbcTemplate.query(QueryUtil.getQueryByName("usuario.buscar.pelo.email"), parameters, USUARIO_ROW_MAPPER);
+		return usuarios.isEmpty() ? null : usuarios.get(0);
+	}
 }

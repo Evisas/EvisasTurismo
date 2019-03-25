@@ -12,10 +12,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import br.com.evisas.dao.UsuarioDao;
 import br.com.evisas.entity.Usuario;
+import br.com.evisas.services.UsuarioServices;
 import br.com.evisas.util.Const;
+
 @Controller
 public class UsuarioController {
 
+	@Autowired
+	private UsuarioServices usuarioServices;
+	
 	@Autowired
 	private UsuarioDao usuarioDao;
 	
@@ -75,5 +80,28 @@ public class UsuarioController {
 			result.rejectValue("email", "msg.erro.email.ja.cadastrado");
 			return "usuario/cadastro";
 		}
+	}
+
+	@RequestMapping("/reenvioDeSenha")
+	public String mostrarTelaReenvioDeSenha(Usuario usuario) {
+		return "usuario/reenvioDeSenha";
+	}
+
+	@RequestMapping("/reenviarSenha")
+	public String reenviarSenha(@Valid Usuario usuario, BindingResult result, Model model) { // TODO: Tentar passar esse código para a camada de serviço
+
+		if (result.hasFieldErrors("email")) {
+			return "usuario/reenvioDeSenha";
+		}
+
+		Usuario usuarioBuscado = usuarioDao.buscarPeloEmail(usuario.getEmail());
+		
+		if (usuarioBuscado != null) {
+			usuarioServices.enviarEmailSenha(usuarioBuscado);
+			model.addAttribute(Const.STR_COD_MSG_SUCESSO, "msg.sucesso.reenvio.senha");
+		} else {
+			model.addAttribute(Const.STR_COD_MSG_ERRO, "msg.erro.buscar.email");
+		}
+		return "usuario/reenvioDeSenha";
 	}
 }
