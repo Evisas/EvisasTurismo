@@ -9,6 +9,10 @@ div.messages div
 {
 	width: 100%;
 }
+.titulo
+{
+	margin-top: 25pt;
+}
 .form
 {
 	padding: 15pt 25pt;
@@ -18,4 +22,9 @@ div.messages div
 {
 	max-width: 250pt;
 	margin: auto;
+}
+.form-cadastro
+{
+	max-width: 450pt;
+	margin: 15pt auto 0 auto;
 }

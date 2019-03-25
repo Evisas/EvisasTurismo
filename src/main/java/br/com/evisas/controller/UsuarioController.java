@@ -4,6 +4,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -53,5 +54,26 @@ public class UsuarioController {
 	public String fazerLogout(HttpSession session) {
 		session.invalidate();
 		return "redirect:login";
+	}
+
+	@RequestMapping("/cadastro")
+	public String mostrarTelaCadastro(Usuario usuario) {
+		return "usuario/cadastro";
+	}
+
+	@RequestMapping("/cadastrar")
+	public String fazerCadastro(@Valid Usuario usuario, BindingResult result, HttpSession session) {
+		if (result.hasErrors()) {
+			return "usuario/cadastro";
+		}
+		try {
+			long id = usuarioDao.criar(usuario);
+			usuario.setId(id);
+			session.setAttribute("usuario", usuario);
+			return "redirect:home";
+		} catch (DuplicateKeyException ex) {
+			result.rejectValue("email", "msg.erro.email.ja.cadastrado");
+			return "usuario/cadastro";
+		}
 	}
 }

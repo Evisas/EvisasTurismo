@@ -1,5 +1,8 @@
 package br.com.evisas.entity;
 
+import java.text.ParseException;
+
+import javax.swing.text.MaskFormatter;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
@@ -58,6 +61,26 @@ public class Usuario {
 
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
+	}
+
+	public String getTelefoneFormatado() {
+        try {
+        	if (telefone == null) {
+        		return null;
+        	} else if (telefone.length() == 9) {
+    			return new MaskFormatter("(##) #####-####").valueToString(telefone);
+        	} else if (telefone.length() == 8) {
+        		return new MaskFormatter("(##) ####-####").valueToString(telefone);
+        	} else {
+        		return telefone;
+        	}
+		} catch (ParseException e) {
+			throw new IllegalArgumentException("Erro ao formatar o número de telefone: [" + telefone + "]", e);
+		}
+	}
+
+	public void setTelefoneFormatado(String telefoneFormatado) { // (XX) 99999-9999
+		this.telefone = telefoneFormatado.replaceAll("\\D", "");
 	}
 
 	public String getSenha() {

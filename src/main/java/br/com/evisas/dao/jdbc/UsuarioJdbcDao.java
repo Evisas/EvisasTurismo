@@ -2,14 +2,14 @@ package br.com.evisas.dao.jdbc;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import javax.sql.DataSource;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import br.com.evisas.dao.UsuarioDao;
@@ -44,7 +44,10 @@ public class UsuarioJdbcDao implements UsuarioDao {
 		parameters.addValue("telefone", usuario.getTelefone());
 		parameters.addValue("senha", usuario.getSenha());
 
-		return jdbcTemplate.update(QueryUtil.getQueryByName("usuario.criar"), parameters);
+		KeyHolder idGerado = new GeneratedKeyHolder();
+		
+		jdbcTemplate.update(QueryUtil.getQueryByName("usuario.criar"), parameters, idGerado);
+		return idGerado.getKey().longValue();
 	}
 
 	@Override
