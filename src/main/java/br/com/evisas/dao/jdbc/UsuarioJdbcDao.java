@@ -50,11 +50,11 @@ public class UsuarioJdbcDao implements UsuarioDao {
 	@Override
 	public Usuario buscarPeloLogin(Usuario usuario) {
 		MapSqlParameterSource parameters = new MapSqlParameterSource();
-//		NamedParameterJdbcTemplate parameters = new NamedParameterJdbcTemplate((DataSource)null);
 		parameters.addValue("email", usuario.getEmail());
 		parameters.addValue("senha", usuario.getSenha());
 		
-		return jdbcTemplate.queryForObject(QueryUtil.getQueryByName("usuario.buscar.pelo.login"), parameters, USUARIO_ROW_MAPPER);
+		List<Usuario> usuarios = jdbcTemplate.query(QueryUtil.getQueryByName("usuario.buscar.pelo.login"), parameters, USUARIO_ROW_MAPPER);
+		return usuarios.isEmpty() ? null : usuarios.get(0);
 	}
 	
 }
