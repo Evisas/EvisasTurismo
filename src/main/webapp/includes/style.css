@@ -1,0 +1,21 @@
+body {
+	padding: 15px;
+}
+div.messages
+{
+	height: 70pt;
+}
+div.messages div
+{
+	width: 100%;
+}
+.form
+{
+	padding: 15pt 25pt;
+	background-color: #f5f5f5;
+}
+.form-login
+{
+	max-width: 250pt;
+	margin: auto;
+}
