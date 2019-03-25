@@ -48,4 +48,10 @@ public class UsuarioController {
 	public String mostrarTelaHome() {
 		return "usuario/home";
 	}
+
+	@RequestMapping("/logout")
+	public String fazerLogout(HttpSession session) {
+		session.invalidate();
+		return "redirect:login";
+	}
 }
