@@ -8,6 +8,8 @@ import java.util.Map;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -15,6 +17,8 @@ import org.xml.sax.SAXException;
 
 public class QueryUtil {
 
+	private static final Logger logger = LogManager.getLogger(QueryUtil.class);
+	
 	private static final String PATH_ARQUIVO_QUERIES = "src/main/resources/data/sql/queries.xml";
 	
 	private static Map<String, String> queryBuffer = null;
@@ -36,7 +40,7 @@ public class QueryUtil {
 	private static Map<String, String> getQueryBuffer() {
 		if (queryBuffer == null) {
 			queryBuffer = obterQueriesDoXml();
-			System.out.println("Leu arquivo de queries"); // TODO: Usar log4j ao invés de sisout
+			logger.info("Leu arquivo de queries");
 		}
 		return queryBuffer;
 	}
