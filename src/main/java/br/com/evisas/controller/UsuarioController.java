@@ -1,9 +1,12 @@
 package br.com.evisas.controller;
 
+import java.util.Locale;
+
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,18 +15,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import br.com.evisas.dao.UsuarioDao;
 import br.com.evisas.entity.Usuario;
-import br.com.evisas.services.UsuarioServices;
+import br.com.evisas.services.EmailService;
 import br.com.evisas.util.Const;
 
 @Controller
 public class UsuarioController {
 
 	@Autowired
-	private UsuarioServices usuarioServices;
-	
-	@Autowired
 	private UsuarioDao usuarioDao;
 	
+	@Autowired
+	EmailService emailService;
+
+	@Autowired
+	private MessageSource messageSource;
+    
 	@RequestMapping("/")
 	public String entrarNoSite() {
 		return "redirect:login";
@@ -88,20 +94,28 @@ public class UsuarioController {
 	}
 
 	@RequestMapping("/reenviarSenha")
-	public String reenviarSenha(@Valid Usuario usuario, BindingResult result, Model model) { // TODO: Tentar passar esse cÛdigo para a camada de serviÁo
+	public String reenviarSenha(@Valid Usuario usuario, BindingResult result, Model model, Locale locale) { // TODO: Tentar passar esse c√≥digo para a camada de servi√ßo
 
 		if (result.hasFieldErrors("email")) {
 			return "usuario/reenvioDeSenha";
 		}
-
+		// TODO: passar este c√≥digo para camada service
 		Usuario usuarioBuscado = usuarioDao.buscarPeloEmail(usuario.getEmail());
-		
-		if (usuarioBuscado != null) {
-			usuarioServices.enviarEmailSenha(usuarioBuscado);
-			model.addAttribute(Const.STR_COD_MSG_SUCESSO, "msg.sucesso.reenvio.senha");
-		} else {
+		if (usuarioBuscado == null) {
 			model.addAttribute(Const.STR_COD_MSG_ERRO, "msg.erro.buscar.email");
+			return "usuario/reenvioDeSenha";
 		}
-		return "usuario/reenvioDeSenha";
+			
+		boolean enviou = emailService.enviarEmailSimples(usuarioBuscado.getEmail(), 
+										messageSource.getMessage("email.reenvio.senha.assunto", null, locale), 
+										messageSource.getMessage("email.reenvio.senha.texto", new Object[] {usuarioBuscado.getNome(), usuarioBuscado.getSenha()}, locale));
+		
+		if (!enviou) {
+			model.addAttribute(Const.STR_COD_MSG_ERRO, "msg.erro.envio.email");
+			return "usuario/reenvioDeSenha";
+		}
+		
+		model.addAttribute(Const.STR_COD_MSG_SUCESSO, "msg.sucesso.reenvio.senha");
+		return "usuario/login";
 	}
 }
