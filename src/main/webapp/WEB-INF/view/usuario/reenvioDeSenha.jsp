@@ -16,7 +16,7 @@
 			<div class="alert alert-success text-center"><spring:message code='${codigoMsgSucesso}' text="" /></div>
 		</c:if>
 
-		<form:form methodParam="post" action="reenviarSenha" modelAttribute="usuario" class="form form-reenvio-senha rounded-lg" novalidate="true">
+		<form:form methodParam="post" action="reenvioDeSenha" modelAttribute="usuario" class="form form-reenvio-senha rounded-lg" novalidate="true">
 			<div class="text-left">
 			
 				<div class="form-group">

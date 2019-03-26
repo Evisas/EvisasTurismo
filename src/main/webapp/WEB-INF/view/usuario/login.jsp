@@ -17,7 +17,7 @@
 	</div>
 	<div id="content" class="container text-center">
 		
-		<form:form methodParam="post" action="logar" modelAttribute="usuario" cssClass="form form-login rounded-lg" novalidate="true">
+		<form:form methodParam="post" action="login" modelAttribute="usuario" cssClass="form form-login rounded-lg" novalidate="true">
 			<div class="text-left">
 				<div class="form-group">
 				<spring:bind path="email">

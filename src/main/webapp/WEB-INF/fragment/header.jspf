@@ -12,6 +12,8 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 --%>
 	
+	<title>Evisas</title>
+
 	<!-- Includes Jquery -->
 	<script type="text/javascript" src="/js/jquery/jquery-3.3.1.min.js"></script>
 	
@@ -26,7 +28,12 @@
 	<!-- Includes Jquery Validation -->
 	<script type="text/javascript" src="/js/validation/jquery.validate.min.js"></script>
 	<script type="text/javascript" src="/js/validation/additional-methods.min.js"></script>
+	
+	<link rel="stylesheet" href="/css/style.css">
+
 	<script type="text/javascript">
+
+	// Muda as configurações padrão do Jquery validator de acordo com nossa necessidade
 	$.validator.setDefaults({
 		errorElement: "div",
 		errorClass: "invalid-feedback",
@@ -90,8 +97,4 @@
 		$("form").validate();
 	});
 	</script>
-	
-	<link rel="stylesheet" href="../../includes/style.css">
-
-	<title>Evisas</title>
 </head>

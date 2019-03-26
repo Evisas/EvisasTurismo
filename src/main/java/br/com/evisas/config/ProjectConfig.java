@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
@@ -24,5 +25,14 @@ public class ProjectConfig implements WebMvcConfigurer {
 		LocalValidatorFactoryBean bean = new LocalValidatorFactoryBean();
 		bean.setValidationMessageSource(messageSource());
 		return bean;
+	}
+	
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(new UsuarioAutenticationInterceptor())
+								.excludePathPatterns("/bootstrap/**", 
+													 "/css/**", 
+													 "/images/**", 
+													 "/js/**");
 	}
 }

@@ -11,6 +11,8 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import br.com.evisas.dao.UsuarioDao;
@@ -35,12 +37,12 @@ public class UsuarioController {
 		return "redirect:login";
 	}
 
-	@RequestMapping("/login")
+	@GetMapping("/login")
 	public String mostrarTelaLogin(Usuario usuario) {
 		return "usuario/login";
 	}
 
-	@RequestMapping("/logar")
+	@PostMapping("/login")
 	public String fazerLogin(@Valid Usuario usuario, BindingResult result, Model model, HttpSession session) {
 		if (result.hasFieldErrors("email") || result.hasFieldErrors("senha")) {
 			return "usuario/login";
@@ -67,12 +69,12 @@ public class UsuarioController {
 		return "redirect:login";
 	}
 
-	@RequestMapping("/cadastro")
+	@GetMapping("/cadastro")
 	public String mostrarTelaCadastro(Usuario usuario) {
 		return "usuario/cadastro";
 	}
 
-	@RequestMapping("/cadastrar")
+	@PostMapping("/cadastro")
 	public String fazerCadastro(@Valid Usuario usuario, BindingResult result, HttpSession session) {
 		if (result.hasErrors()) {
 			return "usuario/cadastro";
@@ -88,12 +90,12 @@ public class UsuarioController {
 		}
 	}
 
-	@RequestMapping("/reenvioDeSenha")
+	@GetMapping("/reenvioDeSenha")
 	public String mostrarTelaReenvioDeSenha(Usuario usuario) {
 		return "usuario/reenvioDeSenha";
 	}
 
-	@RequestMapping("/reenviarSenha")
+	@PostMapping("/reenvioDeSenha")
 	public String reenviarSenha(@Valid Usuario usuario, BindingResult result, Model model, Locale locale) { // TODO: Tentar passar esse código para a camada de serviço
 
 		if (result.hasFieldErrors("email")) {

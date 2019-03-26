@@ -22,7 +22,7 @@
 		</spring:hasBindErrors>
 		--%>
 		
-		<form:form methodParam="post" action="cadastrar" modelAttribute="usuario" class="form form-cadastro rounded-lg" novalidate="true">
+		<form:form methodParam="post" action="cadastro" modelAttribute="usuario" class="form form-cadastro rounded-lg" novalidate="true">
 			<div class="text-left">
 			
 				<div class="form-group">
