@@ -33,6 +33,7 @@ public class ProjectConfig implements WebMvcConfigurer {
 								.excludePathPatterns("/bootstrap/**", 
 													 "/css/**", 
 													 "/images/**", 
-													 "/js/**");
+													 "/js/**",
+													 "/error");
 	}
 }

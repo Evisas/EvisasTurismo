@@ -7,14 +7,8 @@
 		<img src="/images/logo.png" alt="logotipo">
 	</div>
 	<div id="content" class="container text-center">
-		<h2 class="titulo">Reenvio de Senha</h2>
-
-		<c:if test="${not empty codigoMsgErro}">
-			<div class="alert alert-danger text-center"><spring:message code='${codigoMsgErro}' text="" /></div>
-		</c:if>
-		<c:if test="${not empty codigoMsgSucesso}">
-			<div class="alert alert-success text-center"><spring:message code='${codigoMsgSucesso}' text="" /></div>
-		</c:if>
+		<h2>Reenvio de Senha</h2>
+		<%@include file="../../fragment/alert-messages.jspf"%>
 
 		<form:form methodParam="post" action="reenvioDeSenha" modelAttribute="usuario" class="form form-reenvio-senha rounded-lg" novalidate="true">
 			<div class="text-left">
@@ -40,12 +34,13 @@
 	<div id="footer"></div>
 	
 	<script type="text/javascript">
-	$(document).ready(function(){
-		// ao submeter formulário, desabilita botão "submit" para usuário não clicar várias vezes enquanto processa
-		$("form").submit(function(){
-			$(this).find("input[type='submit']").prop("disabled", true);
-		});
-	});
+//	TODO: Arrumar, quando não passa na validação do jquery tbm está chamando o método
+//	$(document).ready(function(){
+//		// ao submeter formulário, desabilita botão "submit" para usuário não clicar várias vezes enquanto processa
+//		$("form").submit(function(){
+//			$(this).find("input[type='submit']").prop("disabled", true);
+//		});
+//	});
 	</script>
 </body>
 </html>

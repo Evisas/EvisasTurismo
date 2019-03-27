@@ -6,13 +6,8 @@
 <body>
 	<div id="header" class="text-center">
 		<img src="/images/logo.png" alt="logotipo">
-		<div class="messages d-flex align-items-center">
-			<c:if test="${not empty codigoMsgErro}">
-				<div class="alert alert-danger text-center"><spring:message code='${codigoMsgErro}' text="" /></div>
-			</c:if>
-			<c:if test="${not empty codigoMsgSucesso}">
-				<div class="alert alert-success text-center"><spring:message code='${codigoMsgSucesso}' text="" /></div>
-			</c:if>
+		<div class="messages-static-container d-flex align-items-center">
+			<%@include file="../../fragment/alert-messages.jspf"%>
 		</div>
 	</div>
 	<div id="content" class="container text-center">

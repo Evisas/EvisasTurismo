@@ -10,7 +10,8 @@
 	</div>
 
 	<div id="content" class="container text-center">
-		<h1><strong>Início</strong></h1>
+		<h1 class="titulo"><strong>EVISAS</strong></h1>
+		<%@include file="../../fragment/alert-messages.jspf"%>
 		
 	</div>
 	

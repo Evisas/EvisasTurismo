@@ -7,14 +7,8 @@
 		<img src="/images/logo.png" alt="logotipo">
 	</div>
 	<div id="content" class="container text-center">
-		<h2 class="titulo">Cadastro</h2>
-
-		<c:if test="${not empty codigoMsgErro}">
-			<div class="alert alert-danger text-center"><spring:message code='${codigoMsgErro}' text="" /></div>
-		</c:if>
-		<c:if test="${not empty codigoMsgSucesso}">
-			<div class="alert alert-success text-center"><spring:message code='${codigoMsgSucesso}' text="" /></div>
-		</c:if>
+		<h2>Cadastro</h2>
+		<%@include file="../../fragment/alert-messages.jspf"%>
 		
 		<%-- 
 		<spring:hasBindErrors name="usuario">

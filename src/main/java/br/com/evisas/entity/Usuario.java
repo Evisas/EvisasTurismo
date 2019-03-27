@@ -9,6 +9,7 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 @Component
 public class Usuario {
@@ -24,7 +25,7 @@ public class Usuario {
 	@Size(max=40)
 	private String email;
 	
-	@Pattern(regexp="[0-9]{10,11}")
+	@Pattern(regexp="(^[0-9]{10,11}$)|^$")
 	private String telefone;
 	
 	@NotBlank
@@ -56,7 +57,7 @@ public class Usuario {
 	}
 
 	public String getTelefone() {
-		return telefone;
+		return StringUtils.isEmpty(telefone) ? null : telefone;
 	}
 
 	public void setTelefone(String telefone) {

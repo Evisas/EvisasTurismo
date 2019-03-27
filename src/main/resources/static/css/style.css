@@ -1,17 +1,21 @@
 body {
 	padding: 15px;
 }
-div.messages
+div.messages-static-container
 {
 	height: 70pt;
 }
-div.messages div
+div.messages-static-container div
 {
 	width: 100%;
 }
+div#content
+{
+	padding-top: 25pt;
+}
 .titulo
 {
-	margin-top: 25pt;
+	margin-bottom: 20pt;
 }
 .form
 {

@@ -9,7 +9,7 @@ CREATE TABLE usuarios
 	id           	bigint NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	nome         	varchar(80) NOT NULL,
 	email        	varchar(40) NOT NULL UNIQUE,
-	telefone       	numeric(11) NOT NULL,
+	telefone       	numeric(11),
 	senha         	varchar(15) NOT NULL
 );
 

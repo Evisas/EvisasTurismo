@@ -14,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.evisas.dao.UsuarioDao;
 import br.com.evisas.entity.Usuario;
@@ -75,7 +76,7 @@ public class UsuarioController {
 	}
 
 	@PostMapping("/cadastro")
-	public String fazerCadastro(@Valid Usuario usuario, BindingResult result, HttpSession session) {
+	public String fazerCadastro(@Valid Usuario usuario, BindingResult result, RedirectAttributes redirectAttr, HttpSession session) {
 		if (result.hasErrors()) {
 			return "usuario/cadastro";
 		}
@@ -83,6 +84,8 @@ public class UsuarioController {
 			long id = usuarioDao.criar(usuario);
 			usuario.setId(id);
 			session.setAttribute(Const.USUARIO, usuario);
+			redirectAttr.addFlashAttribute(Const.STR_COD_MSG_SUCESSO, "msg.sucesso.cadastro.usuario");
+			
 			return "redirect:home";
 		} catch (DuplicateKeyException ex) {
 			result.rejectValue("email", "msg.erro.email.ja.cadastrado");
@@ -107,7 +110,7 @@ public class UsuarioController {
 			model.addAttribute(Const.STR_COD_MSG_ERRO, "msg.erro.buscar.email");
 			return "usuario/reenvioDeSenha";
 		}
-			
+		
 		boolean enviou = emailService.enviarEmailSimples(usuarioBuscado.getEmail(), 
 										messageSource.getMessage("email.reenvio.senha.assunto", null, locale), 
 										messageSource.getMessage("email.reenvio.senha.texto", new Object[] {usuarioBuscado.getNome(), usuarioBuscado.getSenha()}, locale));

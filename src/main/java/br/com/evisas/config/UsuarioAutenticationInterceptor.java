@@ -11,7 +11,7 @@ public class UsuarioAutenticationInterceptor extends HandlerInterceptorAdapter {
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        System.out.println("passou autenticação usuario: " + request.getRequestURI());
+
 		String uri = request.getRequestURI();
 		if(uri.endsWith("login") || 
 		   uri.endsWith("cadastro") || 
