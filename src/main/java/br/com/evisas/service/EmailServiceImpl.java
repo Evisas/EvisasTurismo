@@ -1,4 +1,4 @@
-package br.com.evisas.services;
+package br.com.evisas.service;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

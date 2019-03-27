@@ -36,7 +36,16 @@
 			</div>
 		</form:form>
 	</div>
-	
+
 	<div id="footer"></div>
+	
+	<script type="text/javascript">
+	$(document).ready(function(){
+		// ao submeter formulário, desabilita botão "submit" para usuário não clicar várias vezes enquanto processa
+		$("form").submit(function(){
+			$(this).find("input[type='submit']").prop("disabled", true);
+		});
+	});
+	</script>
 </body>
 </html>

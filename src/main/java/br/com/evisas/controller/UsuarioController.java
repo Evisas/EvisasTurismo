@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import br.com.evisas.dao.UsuarioDao;
 import br.com.evisas.entity.Usuario;
-import br.com.evisas.services.EmailService;
+import br.com.evisas.service.EmailService;
 import br.com.evisas.util.Const;
 
 @Controller
@@ -50,7 +50,7 @@ public class UsuarioController {
 		
 		Usuario usuarioBuscado = usuarioDao.buscarPeloLogin(usuario);
 		if (usuarioBuscado != null) {
-			session.setAttribute("usuario", usuarioBuscado);
+			session.setAttribute(Const.USUARIO, usuarioBuscado);
 			return "redirect:home";
 		} else {
 			model.addAttribute(Const.STR_COD_MSG_ERRO, "msg.erro.login.invalido");
@@ -82,7 +82,7 @@ public class UsuarioController {
 		try {
 			long id = usuarioDao.criar(usuario);
 			usuario.setId(id);
-			session.setAttribute("usuario", usuario);
+			session.setAttribute(Const.USUARIO, usuario);
 			return "redirect:home";
 		} catch (DuplicateKeyException ex) {
 			result.rejectValue("email", "msg.erro.email.ja.cadastrado");

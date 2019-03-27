@@ -5,6 +5,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import br.com.evisas.util.Const;
+
 public class UsuarioAutenticationInterceptor extends HandlerInterceptorAdapter {
 
 	@Override
@@ -17,7 +19,7 @@ public class UsuarioAutenticationInterceptor extends HandlerInterceptorAdapter {
 			return true;	// páginas que não precisa-se estar logado, pode continuar...
 		}
 		
-		if(request.getSession().getAttribute("usuario") != null) {	// usuário está logado, pode continuar...
+		if(request.getSession().getAttribute(Const.USUARIO) != null) {	// usuário está logado, pode continuar...
 			return true;
 		}
 		
