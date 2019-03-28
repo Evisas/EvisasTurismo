@@ -2,6 +2,12 @@ package br.com.evisas.entity;
 
 import java.time.LocalDateTime;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
+import br.com.evisas.util.StringFormatUtils;
+
 public class SolicitacaoDeDocumento {
 	
 	public enum Status {
@@ -9,11 +15,24 @@ public class SolicitacaoDeDocumento {
 	}
 	
 	private long id;
+
+	@NotBlank
+	@Size(min=2, max=80)
 	private String nomeSolicitante;
+
+	@NotBlank
+	@Size(min=11, max=11)
+	@Pattern(regexp="^[0-9]{11}$")
 	private String cpfSolicitante;
+	
+	@Size(max=100)
 	private String observacao;
+
 	private Status status;
+	
+	@Size(max=100)
 	private String motivoRecusa;
+
 	private LocalDateTime dataSolicitacao;
 	
 	public long getId() {
@@ -38,6 +57,14 @@ public class SolicitacaoDeDocumento {
 
 	public void setCpfSolicitante(String cpfSolicitante) {
 		this.cpfSolicitante = cpfSolicitante;
+	}
+
+	public String getCpfSolicitanteFormatado() {
+        return StringFormatUtils.formatarCpf(cpfSolicitante);
+	}
+
+	public void setCpfSolicitanteFormatado(String cpfSolicitanteFormatado) {
+		this.cpfSolicitante = StringFormatUtils.obterSomenteNumeros(cpfSolicitanteFormatado);
 	}
 
 	public String getObservacao() {

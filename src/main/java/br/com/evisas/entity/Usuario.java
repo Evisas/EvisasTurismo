@@ -1,8 +1,5 @@
 package br.com.evisas.entity;
 
-import java.text.ParseException;
-
-import javax.swing.text.MaskFormatter;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
@@ -10,6 +7,8 @@ import javax.validation.constraints.Size;
 
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
+
+import br.com.evisas.util.StringFormatUtils;
 
 @Component
 public class Usuario {
@@ -65,23 +64,11 @@ public class Usuario {
 	}
 
 	public String getTelefoneFormatado() {
-        try {
-        	if (telefone == null) {
-        		return null;
-        	} else if (telefone.length() == 9) {
-    			return new MaskFormatter("(##) #####-####").valueToString(telefone);
-        	} else if (telefone.length() == 8) {
-        		return new MaskFormatter("(##) ####-####").valueToString(telefone);
-        	} else {
-        		return telefone;
-        	}
-		} catch (ParseException e) {
-			throw new IllegalArgumentException("Erro ao formatar o número de telefone: [" + telefone + "]", e);
-		}
+		return StringFormatUtils.formatarTelefone8ou9digitos(telefone);
 	}
 
-	public void setTelefoneFormatado(String telefoneFormatado) { // (XX) 99999-9999
-		this.telefone = telefoneFormatado.replaceAll("\\D", "");
+	public void setTelefoneFormatado(String telefoneFormatado) {
+		this.telefone = StringFormatUtils.obterSomenteNumeros(telefoneFormatado);
 	}
 
 	public String getSenha() {

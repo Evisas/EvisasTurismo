@@ -30,6 +30,7 @@
 	<script type="text/javascript" src="/js/validation/additional-methods.min.js"></script>
 	
 	<link rel="stylesheet" href="/css/style.css">
+	<script type="text/javascript" src="/js/utilFunctions.js"></script>
 
 	<script type="text/javascript">
 
@@ -70,31 +71,24 @@
 		minlength: jQuery.validator.format("<spring:message code="msg.erro.tamanho.minimo.campo" />"),
 //		rangelength: jQuery.validator.format("Please enter a value between {0} and {1} characters long."),
 //		range: jQuery.validator.format("Please enter a value between {0} and {1}."),
-//		max: jQuery.validator.format("Please enter a value less than or equal to {0}."),
-//		min: jQuery.validator.format("Please enter a value greater than or equal to {0}.")
+		max: jQuery.validator.format("<spring:message code="msg.erro.valor.deve.ser.menor.igual" />"),
+		min: jQuery.validator.format("<spring:message code="msg.erro.valor.deve.ser.maior.igual" />"),
 
-		pattern: "<spring:message code="javax.validation.constraints.Pattern.message" />",
+		pattern: "<spring:message code="javax.validation.constraints.Pattern.message" />"
 	});
-
-	var aplicarMascaraTelefone8ou9digitos = function(seletor) {
-		var maskBehavior = function (val) {
-			return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';
-		}
-		var options = { 
-			onKeyPress: function(val, e, field, options) {
-				field.mask(maskBehavior.apply({}, arguments), options);
-			}
-		};
-		
-		$(seletor).mask(maskBehavior, options);
-	}
 	
 	// Aplica validação (jquery validation) nos formulários da página
 	$(document).ready(function(){
-		$('.data').mask('00/00/0000');
+//		$('.data').mask('00/00/0000'); // campo data já é tratado pelo bootstrap e html5
+		$('.cpf').mask('000.000.000-00');
 		aplicarMascaraTelefone8ou9digitos('.telefone');
-		
 		$("form").validate();
+		$("input[type='date']").rules( "add", {	// mensagem personalizada para validação do tipo 'data'
+			messages: {
+				min: formatarMsgValidacaoComData("<spring:message code="msg.erro.data.deve.ser.posterior.ou.igual" />"),
+				max: formatarMsgValidacaoComData("<spring:message code="msg.erro.data.deve.ser.anterior.ou.igual" />")
+			}
+		});
 	});
 	</script>
 </head>
