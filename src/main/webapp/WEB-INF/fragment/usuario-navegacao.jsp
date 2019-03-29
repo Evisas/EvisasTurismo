@@ -24,7 +24,7 @@
         </div>
       </li>
       <li class="nav-item <c:if test="${param.TELA eq 'ACOMPANHAR_SOLIC'}">active</c:if>">
-        <a class="nav-link" href="${param.TELA eq 'ACOMPANHAR_SOLIC' ? '#' : 'acompanharSolicitacoes'}">Acompanhar Solicitações</a>
+        <a class="nav-link" href="${param.TELA eq 'ACOMPANHAR_SOLIC' ? '#' : 'acompanhamentoSolicitacoes'}">Acompanhar Solicitações</a>
       </li>
     </ul>
     <ul class="nav navbar-right">

@@ -25,15 +25,15 @@ public class SolicitacaoDeDocumento {
 	@Pattern(regexp="^[0-9]{11}$")
 	private String cpfSolicitante;
 	
-	@Size(max=100)
-	private String observacao;
-
-	private Status status;
+	private Status status = Status.PENDENTE; // default
 	
 	@Size(max=100)
 	private String motivoRecusa;
 
-	private LocalDateTime dataSolicitacao;
+	@Size(max=100)
+	private String observacao;
+
+	private LocalDateTime dataSolicitacao = LocalDateTime.now(); // default
 	
 	public long getId() {
 		return id;

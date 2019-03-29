@@ -14,4 +14,47 @@
 		INSERT INTO usuarios (nome, email, telefone, senha)
 		VALUES (:nome, :email, :telefone, :senha)
 	]]></query>
+
+	<query name="solicitacao.passaporte.criar"><![CDATA[
+		INSERT INTO solicitacoesPassaporte 
+			(nomeSolicitante, cpfSolicitante, rgSolicitante, dataSolicitacao, status, observacao, motivoRecusa, previsaoSaida)
+		VALUES 
+			(:nomeSolicitante, :cpfSolicitante, :rgSolicitante, :dataSolicitacao, :status, :observacao, :motivoRecusa, :previsaoSaida)
+	]]></query>
+	<query name="solicitacao.passaporte.listar"><![CDATA[
+		SELECT id,
+		    nomeSolicitante,
+		    cpfSolicitante,
+		    rgSolicitante,
+		    dataSolicitacao,
+		    status,
+		    observacao,
+		    motivoRecusa,
+		    previsaoSaida
+		FROM solicitacoesPassaporte
+	]]></query>
+	<query name="solicitacao.passaporte.buscar.por.id"><![CDATA[
+		SELECT id,
+		    nomeSolicitante,
+		    cpfSolicitante,
+		    rgSolicitante,
+		    dataSolicitacao,
+		    status,
+		    observacao,
+		    motivoRecusa,
+		    previsaoSaida
+	FROM solicitacoesPassaporte
+	WHERE id = :id
+	]]></query>
+	<query name="solicitacao.passaporte.recusar"><![CDATA[
+		UPDATE solicitacoesPassaporte
+		SET	status 		 = :status,
+			motivoRecusa = :motivoRecusa
+		WHERE id = :id
+	]]></query>
+	<query name="solicitacao.passaporte.alterar.status"><![CDATA[
+		UPDATE solicitacoesPassaporte
+		SET	status = :status,
+		WHERE id = :id
+	]]></query>
 </sql>

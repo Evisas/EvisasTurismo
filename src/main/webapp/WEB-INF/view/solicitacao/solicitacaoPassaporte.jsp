@@ -36,10 +36,10 @@
 				
 				<div class="form-group">
 				<spring:bind path="rgSolicitante">
-					<label for="cpfSolicitante">* RG do Solicitante:</label><br />
+					<label for="rgSolicitante">* RG do Solicitante:</label><br />
 					<form:input type="number" id="rgSolicitante" path="rgSolicitante" placeholder="Digite o RG do solicitante" pattern="^[0-9]{5,20}$"
 					minlength="5" maxlength="20" cssClass="form-control ${status.error ? 'is-invalid':''}" required="required"/>
-					<small class="form-text text-muted" target="cpfSolicitante">Somente números</small>
+					<small class="form-text text-muted" target="rgSolicitante">Somente números</small>
 					<div class="invalid-feedback"><form:errors path="rgSolicitante" /></div>
 				</spring:bind>
 				</div>
@@ -59,7 +59,7 @@
 					<label for="observacao">Observação:</label><br />
 					<form:textarea id="observacao" path="observacao" 
 					 maxlength="100" cssClass="form-control ${status.error ? 'is-invalid':''}"/>
-					<small class="form-text text-muted" target="previsaoSaida">Máximo de 100 caracteres.</small>
+					<small class="form-text text-muted" target="observacao">Máximo de 100 caracteres.</small>
 					<div class="invalid-feedback"><form:errors path="observacao" /></div>
 				</spring:bind>
 				</div>

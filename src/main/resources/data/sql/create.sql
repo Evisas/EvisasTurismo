@@ -27,12 +27,12 @@ CREATE TABLE solicitacoesPassaporte
 	id           	bigint NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	nomeSolicitante	varchar(80) NOT NULL,
 	cpfSolicitante 	numeric(11) NOT NULL,
+	rgSolicitante	numeric(20) NOT NULL,
 	dataSolicitacao	datetime 	NOT NULL,
-	status			numeric(2)	NOT NULL,
+	status			enum('PENDENTE', 'ACEITA', 'RECUSADA', 'CANCELADA')	NOT NULL,
 	observacao		varchar(100),
 	motivoRecusa	varchar(100),
-	rg				numeric(20),
-	previsaoSaida	date
+	previsaoSaida	date		NOT NULL
 );
 
 CREATE TABLE solicitacoesVisto 
@@ -43,10 +43,10 @@ CREATE TABLE solicitacoesVisto
 	paisResidencia				varchar(30) NOT NULL,
 	paisAVisitar				varchar(30) NOT NULL,
 	possuiPassaporte 			boolean 	NOT NULL,
-	dataNascimentoSolicitante 	date NOT NULL,
+	dataNascimentoSolicitante 	date 		NOT NULL,
 --	documento					
 	dataSolicitacao				datetime 	NOT NULL,
-	status						numeric(2)	NOT NULL,
+	status						enum('PENDENTE', 'ACEITA', 'RECUSADA', 'CANCELADA')	NOT NULL,
 	observacao					varchar(100),
 	motivoRecusa				varchar(100)
 );

@@ -8,6 +8,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -20,6 +21,7 @@ public class SolicitacaoPassaporte extends SolicitacaoDeDocumento {
 
 	@NotNull
 	@Future
+	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private LocalDate previsaoSaida;
 
 	public String getRgSolicitante() {

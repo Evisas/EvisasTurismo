@@ -21,7 +21,9 @@ public class StringFormatUtils {
 
 	public static String formatarCpf(String cpf) {
 		try {
-			return StringUtils.isEmpty(cpf) ? null : new MaskFormatter(FORMATO_CPF).valueToString(cpf);
+			MaskFormatter cpfMask = new MaskFormatter(FORMATO_CPF);
+			cpfMask.setValueContainsLiteralCharacters(false);
+			return StringUtils.isEmpty(cpf) ? null : cpfMask.valueToString(cpf);
 		} catch (ParseException e) {
 			throw new IllegalArgumentException("Erro ao formatar o número de cpf: [" + cpf + "]", e);
 		}
