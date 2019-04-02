@@ -66,7 +66,7 @@
 				
 			</div>
 			
-			<input type="submit" value="Entrar" class="btn btn-primary" />
+			<input type="submit" value="Solicitar" class="btn btn-primary" />
 
 		</form:form>
 	</div>
