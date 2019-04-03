@@ -1,5 +1,6 @@
 package br.com.evisas.controller;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,16 +10,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import br.com.evisas.dao.SolicitacaoPassaporteDao;
 import br.com.evisas.entity.SolicitacaoPassaporte;
 import br.com.evisas.entity.SolicitacaoVisto;
+import br.com.evisas.entity.Usuario;
+import br.com.evisas.service.SolicitacaoService;
 import br.com.evisas.util.Const;
 
 @Controller
 public class SolicitacaoController {
 
 	@Autowired
-	private SolicitacaoPassaporteDao solicitacaoPassaporteDao;
+	private SolicitacaoService solicitacaoService;
 	
 	@GetMapping("/solicitacaoPassaporte")
 	public String mostrarTelaSolicitarPassaporte(SolicitacaoPassaporte solicitacaoPassaporte) {
@@ -26,21 +28,36 @@ public class SolicitacaoController {
 	}
 
 	@PostMapping("/solicitacaoPassaporte")
-	public String solicitarPassaporte(@Valid SolicitacaoPassaporte solicitacaoPassaporte, BindingResult result, RedirectAttributes redirectAttr) {
+	public String solicitarPassaporte(@Valid SolicitacaoPassaporte solicitacaoPassaporte, BindingResult result, RedirectAttributes redirectAttr, HttpSession session) {
 		if (result.hasErrors()) {
 			return "solicitacao/solicitacaoPassaporte";
 		}
-		long id = solicitacaoPassaporteDao.criar(solicitacaoPassaporte);
-		solicitacaoPassaporte.setId(id);
+		Usuario usuario = (Usuario) session.getAttribute(Const.USUARIO);
+		solicitacaoPassaporte.setIdUsuario(usuario.getId());
+		
+		solicitacaoService.criar(solicitacaoPassaporte);
+		
 		redirectAttr.addFlashAttribute(Const.STR_COD_MSG_SUCESSO, "msg.sucesso.solicitar.passaporte");
-		
 		return "redirect:acompanhamentoSolicitacoes";
-		
 	}
 
 	@GetMapping("/solicitacaoVisto")
 	public String mostrarTelaSolicitarVisto(SolicitacaoVisto solicitacaoVisto) {
 		return "solicitacao/solicitacaoVisto";
+	}
+
+	@PostMapping("/solicitacaoVisto")
+	public String solicitarVisto(SolicitacaoVisto solicitacaoVisto, BindingResult result, RedirectAttributes redirectAttr, HttpSession session) {
+		if (result.hasErrors()) {
+			return "solicitacao/solicitacaoVisto";
+		}
+		Usuario usuario = (Usuario) session.getAttribute(Const.USUARIO);
+		solicitacaoVisto.setIdUsuario(usuario.getId());
+
+		solicitacaoService.criar(solicitacaoVisto);
+
+		redirectAttr.addFlashAttribute(Const.STR_COD_MSG_SUCESSO, "msg.sucesso.solicitar.visto");
+		return "redirect:acompanhamentoSolicitacoes";
 	}
 
 	@GetMapping("/acompanhamentoSolicitacoes")

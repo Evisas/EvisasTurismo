@@ -36,6 +36,7 @@ public class SolicitacaoPassaporteJdbcDao implements SolicitacaoPassaporteDao {
 			solicitacaoPassaporte.setMotivoRecusa(rs.getString("motivoRecusa"));
 			solicitacaoPassaporte.setObservacao(rs.getString("observacao"));
 			solicitacaoPassaporte.setDataSolicitacao(rs.getTimestamp("dataSolicitacao").toLocalDateTime());
+			solicitacaoPassaporte.setIdUsuario(rs.getInt("idUsuario"));
 
 			return solicitacaoPassaporte;
 		}
@@ -52,6 +53,7 @@ public class SolicitacaoPassaporteJdbcDao implements SolicitacaoPassaporteDao {
 		parameters.addValue("motivoRecusa", solicitacaoPassaporte.getMotivoRecusa());
 		parameters.addValue("observacao", solicitacaoPassaporte.getObservacao());
 		parameters.addValue("dataSolicitacao", solicitacaoPassaporte.getDataSolicitacao());
+		parameters.addValue("idUsuario", solicitacaoPassaporte.getIdUsuario());
 
 		KeyHolder idGerado = new GeneratedKeyHolder();
 		
@@ -74,6 +76,14 @@ public class SolicitacaoPassaporteJdbcDao implements SolicitacaoPassaporteDao {
 	}
 
 	@Override
+	public List<SolicitacaoPassaporte> buscarPorUsuario(long idUsuario) {
+		MapSqlParameterSource parameters = new MapSqlParameterSource();
+		parameters.addValue("idUsuario", idUsuario);
+		
+		return jdbcTemplate.query(QueryUtil.getQueryByName("solicitacao.passaporte.buscar.por.usuario"), parameters, SOLICITACAO_PASSAPORTE_ROW_MAPPER);
+	}
+
+	@Override
 	public void alterarStatus(SolicitacaoPassaporte solicitacaoPassaporte) {
 		MapSqlParameterSource parameters = new MapSqlParameterSource();
 		parameters.addValue("id", solicitacaoPassaporte.getId());
@@ -91,5 +101,4 @@ public class SolicitacaoPassaporteJdbcDao implements SolicitacaoPassaporteDao {
 
 		jdbcTemplate.update(QueryUtil.getQueryByName("solicitacao.passaporte.recusar"), parameters);
 	}
-
 }

@@ -14,12 +14,12 @@
 		INSERT INTO usuarios (nome, email, telefone, senha)
 		VALUES (:nome, :email, :telefone, :senha)
 	]]></query>
-
+<!-- ################################################################################################# -->
 	<query name="solicitacao.passaporte.criar"><![CDATA[
 		INSERT INTO solicitacoesPassaporte 
-			(nomeSolicitante, cpfSolicitante, rgSolicitante, dataSolicitacao, status, observacao, motivoRecusa, previsaoSaida)
+			(nomeSolicitante, cpfSolicitante, rgSolicitante, dataSolicitacao, status, observacao, motivoRecusa, previsaoSaida, idUsuario)
 		VALUES 
-			(:nomeSolicitante, :cpfSolicitante, :rgSolicitante, :dataSolicitacao, :status, :observacao, :motivoRecusa, :previsaoSaida)
+			(:nomeSolicitante, :cpfSolicitante, :rgSolicitante, :dataSolicitacao, :status, :observacao, :motivoRecusa, :previsaoSaida, :idUsuario)
 	]]></query>
 	<query name="solicitacao.passaporte.listar"><![CDATA[
 		SELECT id,
@@ -33,6 +33,19 @@
 		    previsaoSaida
 		FROM solicitacoesPassaporte
 	]]></query>
+	<query name="solicitacao.passaporte.buscar.por.usuario"><![CDATA[
+		SELECT id,
+		    nomeSolicitante,
+		    cpfSolicitante,
+		    rgSolicitante,
+		    dataSolicitacao,
+		    status,
+		    observacao,
+		    motivoRecusa,
+		    previsaoSaida
+		FROM solicitacoesPassaporte
+		WHERE idUsuario = :idUsuario
+	]]></query>
 	<query name="solicitacao.passaporte.buscar.por.id"><![CDATA[
 		SELECT id,
 		    nomeSolicitante,
@@ -43,8 +56,8 @@
 		    observacao,
 		    motivoRecusa,
 		    previsaoSaida
-	FROM solicitacoesPassaporte
-	WHERE id = :id
+		FROM solicitacoesPassaporte
+		WHERE id = :id
 	]]></query>
 	<query name="solicitacao.passaporte.recusar"><![CDATA[
 		UPDATE solicitacoesPassaporte
@@ -54,6 +67,68 @@
 	]]></query>
 	<query name="solicitacao.passaporte.alterar.status"><![CDATA[
 		UPDATE solicitacoesPassaporte
+		SET	status = :status,
+		WHERE id = :id
+	]]></query>
+<!-- ################################################################################################# -->
+	<query name="solicitacao.visto.criar"><![CDATA[
+		INSERT INTO solicitacoesvisto
+			(id, nomeSolicitante, cpfSolicitante, paisResidencia, paisAVisitar, possuiPassaporte, dataNascimentoSolicitante, dataSolicitacao, status, observacao, motivoRecusa, idUsuario)
+		VALUES
+			(:id, :nomeSolicitante, :cpfSolicitante, :paisResidencia, :paisAVisitar, :possuiPassaporte, :dataNascimentoSolicitante, :dataSolicitacao, :status, :observacao, :motivoRecusa, :idUsuario)
+	]]></query>
+	<query name="solicitacao.visto.listar"><![CDATA[
+		SELECT id,
+			nomeSolicitante,
+			cpfSolicitante,
+			paisResidencia,
+			paisAVisitar,
+			possuiPassaporte,
+			dataNascimentoSolicitante,
+			dataSolicitacao,
+			status,
+			observacao,
+			motivoRecusa
+		FROM solicitacoesvisto
+	]]></query>
+	<query name="solicitacao.visto.buscar.por.usuario"><![CDATA[
+		SELECT id,
+			nomeSolicitante,
+			cpfSolicitante,
+			paisResidencia,
+			paisAVisitar,
+			possuiPassaporte,
+			dataNascimentoSolicitante,
+			dataSolicitacao,
+			status,
+			observacao,
+			motivoRecusa
+		FROM solicitacoesvisto
+		WHERE idUsuario = :idUsuario
+	]]></query>
+	<query name="solicitacao.visto.buscar.por.id"><![CDATA[
+		SELECT id,
+			nomeSolicitante,
+			cpfSolicitante,
+			paisResidencia,
+			paisAVisitar,
+			possuiPassaporte,
+			dataNascimentoSolicitante,
+			dataSolicitacao,
+			status,
+			observacao,
+			motivoRecusa
+		FROM solicitacoesvisto
+		WHERE id = :id
+	]]></query>
+	<query name="solicitacao.visto.recusar"><![CDATA[
+		UPDATE solicitacoesvisto
+		SET	status 		 = :status,
+			motivoRecusa = :motivoRecusa
+		WHERE id = :id
+	]]></query>
+	<query name="solicitacao.visto.alterar.status"><![CDATA[
+		UPDATE solicitacoesvisto
 		SET	status = :status,
 		WHERE id = :id
 	]]></query>

@@ -32,7 +32,10 @@ CREATE TABLE solicitacoesPassaporte
 	status			enum('PENDENTE', 'ACEITA', 'RECUSADA', 'CANCELADA')	NOT NULL,
 	observacao		varchar(100),
 	motivoRecusa	varchar(100),
-	previsaoSaida	date		NOT NULL
+	previsaoSaida	date		NOT NULL,
+	idUsuario		bigint,
+	
+	CONSTRAINT FOREIGN KEY (idUsuario) REFERENCES usuarios(id) ON DELETE SET NULL
 );
 
 CREATE TABLE solicitacoesVisto 
@@ -48,5 +51,8 @@ CREATE TABLE solicitacoesVisto
 	dataSolicitacao				datetime 	NOT NULL,
 	status						enum('PENDENTE', 'ACEITA', 'RECUSADA', 'CANCELADA')	NOT NULL,
 	observacao					varchar(100),
-	motivoRecusa				varchar(100)
+	motivoRecusa				varchar(100),
+	idUsuario					bigint,
+	
+	CONSTRAINT FOREIGN KEY (idUsuario) REFERENCES usuarios(id) ON DELETE SET NULL
 );
