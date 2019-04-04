@@ -1,6 +1,5 @@
 package br.com.evisas.entity;
 
-import java.io.File;
 import java.time.LocalDate;
 
 import javax.validation.constraints.NotBlank;
@@ -10,6 +9,11 @@ import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
+
+import br.com.evisas.config.validator.FileExtension;
+import br.com.evisas.config.validator.FileExtension.Type;
+import br.com.evisas.config.validator.FileSize;
 
 @Component
 public class SolicitacaoVisto extends SolicitacaoDeDocumento {
@@ -30,7 +34,9 @@ public class SolicitacaoVisto extends SolicitacaoDeDocumento {
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private LocalDate dataNascimentoSolicitante;
 	
-	private File documento;
+	@FileSize(max=20*1024*1024) // 20Mb
+	@FileExtension(extensions="pdf,doc,docx,zip,rar,jpg,jpeg,png,bmp", type=Type.ONLY)
+	private MultipartFile documento;
 	
 	public String getPaisDeResidencia() {
 		return paisDeResidencia;
@@ -64,11 +70,11 @@ public class SolicitacaoVisto extends SolicitacaoDeDocumento {
 		this.dataNascimentoSolicitante = dataNascimentoSolicitante;
 	}
 
-	public File getDocumento() {
+	public MultipartFile getDocumento() {
 		return documento;
 	}
 
-	public void setDocumento(File documento) {
+	public void setDocumento(MultipartFile documento) {
 		this.documento = documento;
 	}
 }

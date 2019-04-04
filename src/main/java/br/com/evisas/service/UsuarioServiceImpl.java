@@ -5,13 +5,16 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import br.com.evisas.config.businessError.BusinessException;
 import br.com.evisas.dao.UsuarioDao;
 import br.com.evisas.entity.Usuario;
 
 @Service
-public class UsuarioServicesImpl implements UsuarioServices {
+@Transactional(propagation = Propagation.NOT_SUPPORTED)
+public class UsuarioServiceImpl implements UsuarioService {
 
 	@Autowired
 	EmailService emailService;
@@ -33,6 +36,7 @@ public class UsuarioServicesImpl implements UsuarioServices {
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED)
 	public void cadastrar(Usuario usuario) {
 		try {
 			long id = usuarioDao.criar(usuario);

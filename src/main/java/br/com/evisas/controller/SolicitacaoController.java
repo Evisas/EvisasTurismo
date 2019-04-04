@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import br.com.evisas.config.businessError.HandleBusinessError;
 import br.com.evisas.entity.SolicitacaoPassaporte;
 import br.com.evisas.entity.SolicitacaoVisto;
 import br.com.evisas.entity.Usuario;
@@ -47,7 +48,8 @@ public class SolicitacaoController {
 	}
 
 	@PostMapping("/solicitacaoVisto")
-	public String solicitarVisto(SolicitacaoVisto solicitacaoVisto, BindingResult result, RedirectAttributes redirectAttr, HttpSession session) {
+	@HandleBusinessError(errorPage="solicitacao/solicitacaoVisto")
+	public String solicitarVisto(@Valid SolicitacaoVisto solicitacaoVisto, BindingResult result, RedirectAttributes redirectAttr, HttpSession session) {
 		if (result.hasErrors()) {
 			return "solicitacao/solicitacaoVisto";
 		}

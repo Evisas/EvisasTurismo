@@ -73,9 +73,9 @@
 <!-- ################################################################################################# -->
 	<query name="solicitacao.visto.criar"><![CDATA[
 		INSERT INTO solicitacoesvisto
-			(id, nomeSolicitante, cpfSolicitante, paisResidencia, paisAVisitar, possuiPassaporte, dataNascimentoSolicitante, dataSolicitacao, status, observacao, motivoRecusa, idUsuario)
+			(nomeSolicitante, cpfSolicitante, paisResidencia, paisAVisitar, possuiPassaporte, dataNascimentoSolicitante, dataSolicitacao, status, observacao, motivoRecusa, idUsuario)
 		VALUES
-			(:id, :nomeSolicitante, :cpfSolicitante, :paisResidencia, :paisAVisitar, :possuiPassaporte, :dataNascimentoSolicitante, :dataSolicitacao, :status, :observacao, :motivoRecusa, :idUsuario)
+			(:nomeSolicitante, :cpfSolicitante, :paisResidencia, :paisAVisitar, :possuiPassaporte, :dataNascimentoSolicitante, :dataSolicitacao, :status, :observacao, :motivoRecusa, :idUsuario)
 	]]></query>
 	<query name="solicitacao.visto.listar"><![CDATA[
 		SELECT id,

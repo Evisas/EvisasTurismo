@@ -79,7 +79,7 @@
 //		digits: "Please enter only digits.",
 //		creditcard: "Please enter a valid credit card number.",
 		equalTo: jQuery.validator.format("<spring:message code='msg.erro.campo.deve.ser.igual' />"),
-		accept:"<spring:message code='msg.erro.arquivo.extensao.invalida' />",
+		accept:"<spring:message code='msg.erro.validacao.fileExtension' />",
 		maxlength: jQuery.validator.format("<spring:message code='msg.erro.tamanho.maximo.campo' />"),
 		minlength: jQuery.validator.format("<spring:message code='msg.erro.tamanho.minimo.campo' />"),
 //		rangelength: jQuery.validator.format("Please enter a value between {0} and {1} characters long."),

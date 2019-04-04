@@ -44,4 +44,17 @@ public class StringFormatUtils {
 			throw new IllegalArgumentException("Erro ao formatar o número de telefone: [" + telefone + "]", e);
 		}
 	}
+	
+	public static String preencherAEsquerdaComZeros(long value, int size) {
+		return preencherAEsquerdaComZeros(String.valueOf(value), size);
+	}
+
+	public static String preencherAEsquerdaComZeros(String value, int size) {
+		return preencherAEsquerda(value, "0", size);
+	}
+
+	public static String preencherAEsquerda(String value, String filler, int size) {
+		return String.format("%"+filler+size+"d", Integer.parseInt(value));
+	}
+
 }

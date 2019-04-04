@@ -41,6 +41,10 @@ public class SolicitacaoDeDocumento {
 		return id;
 	}
 	
+	public String getIdFormatado() {
+		return StringFormatUtils.preencherAEsquerdaComZeros(id, 7);
+	}
+	
 	public void setId(long id) {
 		this.id = id;
 	}
@@ -103,6 +107,10 @@ public class SolicitacaoDeDocumento {
 
 	public long getIdUsuario() {
 		return idUsuario;
+	}
+
+	public String getIdUsuarioFormatado() {
+		return StringFormatUtils.preencherAEsquerdaComZeros(idUsuario, 5);
 	}
 
 	public void setIdUsuario(long idUsuario) {

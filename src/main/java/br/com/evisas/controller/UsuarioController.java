@@ -14,14 +14,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.evisas.config.businessError.HandleBusinessError;
 import br.com.evisas.entity.Usuario;
-import br.com.evisas.service.UsuarioServices;
+import br.com.evisas.service.UsuarioService;
 import br.com.evisas.util.Const;
 
 @Controller
 public class UsuarioController {
 
 	@Autowired
-	private UsuarioServices usuarioServices;
+	private UsuarioService usuarioServices;
 	
 	@RequestMapping("/")
 	public String entrarNoSite() {
