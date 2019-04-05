@@ -27,7 +27,7 @@ public class SolicitacaoPassaporteJdbcDao implements SolicitacaoPassaporteDao {
 		@Override
 		public SolicitacaoPassaporte mapRow(ResultSet rs, int rowNum) throws SQLException {
 			SolicitacaoPassaporte solicitacaoPassaporte = new SolicitacaoPassaporte();
-			solicitacaoPassaporte.setId(rs.getInt("id"));
+			solicitacaoPassaporte.setId(rs.getLong("id"));
 			solicitacaoPassaporte.setNomeSolicitante(rs.getString("nomeSolicitante"));
 			solicitacaoPassaporte.setCpfSolicitante(rs.getString("cpfSolicitante"));
 			solicitacaoPassaporte.setRgSolicitante(rs.getString("rgSolicitante"));
@@ -36,7 +36,7 @@ public class SolicitacaoPassaporteJdbcDao implements SolicitacaoPassaporteDao {
 			solicitacaoPassaporte.setMotivoRecusa(rs.getString("motivoRecusa"));
 			solicitacaoPassaporte.setObservacao(rs.getString("observacao"));
 			solicitacaoPassaporte.setDataSolicitacao(rs.getTimestamp("dataSolicitacao").toLocalDateTime());
-			solicitacaoPassaporte.setIdUsuario(rs.getInt("idUsuario"));
+			solicitacaoPassaporte.setIdUsuario(rs.getLong("idUsuario"));
 
 			return solicitacaoPassaporte;
 		}

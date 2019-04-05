@@ -97,6 +97,10 @@ public class SolicitacaoDeDocumento {
 		this.motivoRecusa = motivoRecusa;
 	}
 
+	public String getDataSolicitacaoFormatada() {
+		return StringFormatUtils.format(dataSolicitacao);
+	}
+
 	public LocalDateTime getDataSolicitacao() {
 		return dataSolicitacao;
 	}

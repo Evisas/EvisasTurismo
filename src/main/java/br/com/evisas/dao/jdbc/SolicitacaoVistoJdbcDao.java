@@ -27,7 +27,7 @@ public class SolicitacaoVistoJdbcDao implements SolicitacaoVistoDao {
 		@Override
 		public SolicitacaoVisto mapRow(ResultSet rs, int rowNum) throws SQLException {
 			SolicitacaoVisto solicitacaoVisto = new SolicitacaoVisto();
-			solicitacaoVisto.setId(rs.getInt("id"));
+			solicitacaoVisto.setId(rs.getLong("id"));
 			solicitacaoVisto.setNomeSolicitante(rs.getString("nomeSolicitante"));
 			solicitacaoVisto.setCpfSolicitante(rs.getString("cpfSolicitante"));
 			solicitacaoVisto.setPaisDeResidencia(rs.getString("paisResidencia"));
@@ -38,7 +38,7 @@ public class SolicitacaoVistoJdbcDao implements SolicitacaoVistoDao {
 			solicitacaoVisto.setMotivoRecusa(rs.getString("motivoRecusa"));
 			solicitacaoVisto.setObservacao(rs.getString("observacao"));
 			solicitacaoVisto.setDataSolicitacao(rs.getTimestamp("dataSolicitacao").toLocalDateTime());
-			solicitacaoVisto.setIdUsuario(rs.getInt("idUsuario"));
+			solicitacaoVisto.setIdUsuario(rs.getLong("idUsuario"));
 
 			return solicitacaoVisto;
 		}

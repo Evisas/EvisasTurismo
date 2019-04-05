@@ -30,7 +30,8 @@
 		    status,
 		    observacao,
 		    motivoRecusa,
-		    previsaoSaida
+		    previsaoSaida,
+			idUsuario
 		FROM solicitacoesPassaporte
 	]]></query>
 	<query name="solicitacao.passaporte.buscar.por.usuario"><![CDATA[
@@ -42,7 +43,8 @@
 		    status,
 		    observacao,
 		    motivoRecusa,
-		    previsaoSaida
+		    previsaoSaida,
+			idUsuario
 		FROM solicitacoesPassaporte
 		WHERE idUsuario = :idUsuario
 	]]></query>
@@ -55,7 +57,8 @@
 		    status,
 		    observacao,
 		    motivoRecusa,
-		    previsaoSaida
+		    previsaoSaida,
+			idUsuario
 		FROM solicitacoesPassaporte
 		WHERE id = :id
 	]]></query>
@@ -88,7 +91,8 @@
 			dataSolicitacao,
 			status,
 			observacao,
-			motivoRecusa
+			motivoRecusa,
+			idUsuario
 		FROM solicitacoesvisto
 	]]></query>
 	<query name="solicitacao.visto.buscar.por.usuario"><![CDATA[
@@ -102,7 +106,8 @@
 			dataSolicitacao,
 			status,
 			observacao,
-			motivoRecusa
+			motivoRecusa,
+			idUsuario
 		FROM solicitacoesvisto
 		WHERE idUsuario = :idUsuario
 	]]></query>
@@ -117,7 +122,8 @@
 			dataSolicitacao,
 			status,
 			observacao,
-			motivoRecusa
+			motivoRecusa,
+			idUsuario
 		FROM solicitacoesvisto
 		WHERE id = :id
 	]]></query>

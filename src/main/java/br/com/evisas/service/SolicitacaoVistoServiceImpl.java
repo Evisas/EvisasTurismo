@@ -1,5 +1,7 @@
 package br.com.evisas.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -7,32 +9,20 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import br.com.evisas.dao.SolicitacaoPassaporteDao;
 import br.com.evisas.dao.SolicitacaoVistoDao;
-import br.com.evisas.entity.SolicitacaoPassaporte;
 import br.com.evisas.entity.SolicitacaoVisto;
 import br.com.evisas.util.FileUtil;
 
 @Service
 @Transactional(propagation = Propagation.NOT_SUPPORTED)
-public class SolicitacaoServiceImpl implements SolicitacaoService {
+public class SolicitacaoVistoServiceImpl implements SolicitacaoVistoService {
 
 	@Value("${path.documento.solicitacao.visto}")
 	private String PATH_DOCTO_SOLICITACAO_VISTO;
 
 	@Autowired
-	private SolicitacaoPassaporteDao solicitacaoPassaporteDao;
-	
-	@Autowired
 	private SolicitacaoVistoDao solicitacaoVistoDao;
 	
-	@Override
-	@Transactional(propagation = Propagation.REQUIRED)
-	public void criar(SolicitacaoPassaporte solicitacaoPassaporte) {
-		long id = solicitacaoPassaporteDao.criar(solicitacaoPassaporte);
-		solicitacaoPassaporte.setId(id);
-	}
-
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void criar(SolicitacaoVisto solicitacaoVisto) {
@@ -46,5 +36,15 @@ public class SolicitacaoServiceImpl implements SolicitacaoService {
 							 solicitacaoVisto.getIdUsuarioFormatado(),
 							 solicitacaoVisto.getIdFormatado(),
 							 StringUtils.getFilenameExtension(solicitacaoVisto.getDocumento().getOriginalFilename()));
+	}
+
+	@Override
+	public List<SolicitacaoVisto> buscarPorUsuario(long idUsuario) {
+		return solicitacaoVistoDao.buscarPorUsuario(idUsuario);
+	}
+
+	@Override
+	public SolicitacaoVisto buscarPorId(long id) {
+		return solicitacaoVistoDao.buscarPorId(id);
 	}
 }

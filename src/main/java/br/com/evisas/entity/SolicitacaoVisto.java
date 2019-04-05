@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import br.com.evisas.config.validator.FileExtension;
 import br.com.evisas.config.validator.FileExtension.Type;
+import br.com.evisas.util.StringFormatUtils;
 import br.com.evisas.config.validator.FileSize;
 
 @Component
@@ -60,6 +61,10 @@ public class SolicitacaoVisto extends SolicitacaoDeDocumento {
 
 	public void setPossuiPassaporte(Boolean possuiPassaporte) {
 		this.possuiPassaporte = possuiPassaporte;
+	}
+
+	public String getDataNascimentoSolicitanteFormatada() {
+		return StringFormatUtils.format(dataNascimentoSolicitante);
 	}
 
 	public LocalDate getDataNascimentoSolicitante() {

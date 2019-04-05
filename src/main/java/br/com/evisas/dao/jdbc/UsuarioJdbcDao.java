@@ -26,7 +26,7 @@ public class UsuarioJdbcDao implements UsuarioDao {
 		@Override
 		public Usuario mapRow(ResultSet rs, int rowNum) throws SQLException {
 			Usuario usuario = new Usuario();
-			usuario.setId(rs.getInt("id"));
+			usuario.setId(rs.getLong("id"));
 			usuario.setNome(rs.getString("nome"));
 			usuario.setEmail(rs.getString("email"));
 			usuario.setTelefone(rs.getString("telefone"));

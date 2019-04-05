@@ -44,3 +44,14 @@ input[type=number]::-webkit-inner-spin-button {
 input[type=number] {
 	-moz-appearance:textfield; /* Desabilita setas (Firefox) */
 }
+
+.solicitacoes-passaporte, .solicitacoes-visto
+{
+	background-color: #F8F9FA;
+	padding: 20pt;
+	margin-bottom: 20pt;
+}
+.solicitacoes-passaporte h2, .solicitacoes-visto h2
+{
+	margin-bottom: 20pt;
+}

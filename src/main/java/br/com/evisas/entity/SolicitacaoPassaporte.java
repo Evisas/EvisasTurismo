@@ -11,6 +11,8 @@ import javax.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
 
+import br.com.evisas.util.StringFormatUtils;
+
 @Component
 public class SolicitacaoPassaporte extends SolicitacaoDeDocumento {
 
@@ -30,6 +32,10 @@ public class SolicitacaoPassaporte extends SolicitacaoDeDocumento {
 
 	public void setRgSolicitante(String rgSolicitante) {
 		this.rgSolicitante = rgSolicitante;
+	}
+
+	public String getPrevisaoSaidaFormatado() {
+		return StringFormatUtils.format(previsaoSaida);
 	}
 
 	public LocalDate getPrevisaoSaida() {
