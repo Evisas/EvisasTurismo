@@ -3,7 +3,7 @@ package br.com.evisas.entity;
 import org.springframework.stereotype.Component;
 
 @Component
-public class Funcionario {
+public class Funcionario implements Autenticador {
 
 	private long id;
 	private String matricula;
@@ -49,5 +49,10 @@ public class Funcionario {
 
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+
+	@Override
+	public boolean isFuncionario() {
+		return true;
 	}
 }

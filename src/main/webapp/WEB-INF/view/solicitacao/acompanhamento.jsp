@@ -38,7 +38,7 @@
 							<td class="text-center">${solicitacao.previsaoSaidaFormatado}</td>
 							<td class="text-center">${solicitacao.dataSolicitacaoFormatada}</td>
 							<td class="text-center">${solicitacao.status}</td>
-							<td class="text-center"><a href="consultarSolicitacaoPassaporte?id=${solicitacao.id}">Consultar</a></td>
+							<td class="text-center"><a href="consultaSolicitacaoPassaporte?id=${solicitacao.id}">Consultar</a></td>
 						</tr>
 					</c:forEach>
 					</tbody>

@@ -11,7 +11,7 @@ import org.springframework.util.StringUtils;
 import br.com.evisas.util.StringFormatUtils;
 
 @Component
-public class Usuario {
+public class Usuario implements Autenticador {
 	
 	private long id;
 	
@@ -77,5 +77,10 @@ public class Usuario {
 
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+
+	@Override
+	public boolean isFuncionario() {
+		return false;
 	}
 }

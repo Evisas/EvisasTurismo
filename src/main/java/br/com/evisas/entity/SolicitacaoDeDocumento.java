@@ -27,7 +27,7 @@ public class SolicitacaoDeDocumento {
 	@Pattern(regexp="^[0-9]{11}$")
 	private String cpfSolicitante;
 	
-	private Status status = Status.PENDENTE; // default
+	private Status status;
 	
 	@Size(max=100)
 	private String motivoRecusa;
@@ -35,7 +35,7 @@ public class SolicitacaoDeDocumento {
 	@Size(max=100)
 	private String observacao;
 
-	private LocalDateTime dataSolicitacao = LocalDateTime.now(); // default
+	private LocalDateTime dataSolicitacao;
 	
 	public long getId() {
 		return id;
