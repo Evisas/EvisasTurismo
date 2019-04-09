@@ -80,7 +80,7 @@
 							<td>${solicitacao.paisAVisitar}</td>
 							<td class="text-center">${solicitacao.dataSolicitacaoFormatada}</td>
 							<td class="text-center">${solicitacao.status}</td>
-							<td class="text-center"><a href="consultarSolicitacaoVisto?id=${solicitacao.id}">Consultar</a></td>
+							<td class="text-center"><a href="consultaSolicitacaoVisto?id=${solicitacao.id}">Consultar</a></td>
 						</tr>
 					</c:forEach>
 					</tbody>

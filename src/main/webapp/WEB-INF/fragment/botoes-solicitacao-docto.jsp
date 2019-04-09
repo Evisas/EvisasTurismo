@@ -10,8 +10,8 @@
 	<a href="${usuario.funcionario ? '' : 'acompanhamentoSolicitacoes'}" class="btn btn-link">Voltar</a>
 </c:if>
 <c:if test="${usuario.funcionario and solicitacao.status eq 'PENDENTE'}">
-	<a href="admin/aceitarSolicitacao${param.TIPO_SOLICITACAO}?id=${solicitacao.id}" class="btn btn-success">Aceitar</a>
-	<a href="admin/recusarSolicitacao${param.TIPO_SOLICITACAO}?id=${solicitacao.id}" class="btn btn-danger">Recusar</a>
+	<a href="admin/aceitarSolicitacao${param.COMPL_TIPO_SOLICITACAO}?id=${solicitacao.id}" class="btn btn-success">Aceitar</a>
+	<a href="admin/recusarSolicitacao${param.COMPL_TIPO_SOLICITACAO}?id=${solicitacao.id}" class="btn btn-danger">Recusar</a>
 </c:if>
 <c:if test="${not usuario.funcionario}">
 	<c:choose>
@@ -19,7 +19,7 @@
 			<input type="submit" value="Solicitar" class="btn btn-primary" />
 		</c:when>
 		<c:when test="${solicitacao.status eq 'PENDENTE'}">
-			<a id="cancelar-solicitacao" acao="cancelar" href="cancelarSolicitacao${param.TIPO_SOLICITACAO}?id=${solicitacao.id}" class="btn btn-dark">Cancelar Solicitação</a>
+			<a id="cancelar-solicitacao" acao="cancelar" href="cancelarSolicitacao${param.COMPL_TIPO_SOLICITACAO}?id=${solicitacao.id}" class="btn btn-dark">Cancelar Solicitação</a>
 			<input type="button" id="preparar-editar" value="Editar" class="btn btn-primary" />
 			<input type="button" id="cancelar-edicao" value="Cancelar Edição" class="btn btn-secondary" style="display: none;" />
 			<input type="submit" id="editar" value="Reenviar Solicitação" class="btn btn-primary" style="display: none;" />

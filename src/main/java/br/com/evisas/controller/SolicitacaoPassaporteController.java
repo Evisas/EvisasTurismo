@@ -26,7 +26,8 @@ public class SolicitacaoPassaporteController {
 	private SolicitacaoPassaporteService solicitacaoPassaporteService;
 	
 	@GetMapping("/solicitacaoPassaporte")
-	public String mostrarTelaSolicitarPassaporte(SolicitacaoPassaporte solicitacao) {
+	public String mostrarTelaSolicitarPassaporte(Model model) {
+		model.addAttribute(Const.SOLICITACAO, new SolicitacaoPassaporte());
 		return "solicitacao/solicitacaoPassaporte";
 	}
 

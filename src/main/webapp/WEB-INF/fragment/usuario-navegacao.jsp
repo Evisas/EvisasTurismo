@@ -1,4 +1,9 @@
-<%-- IMPORTANTE: Usa classes CSS do bootstrap --%>
+<!--
+	IMPORTANTE: Usa classes CSS do bootstrap 
+	PARÂMETROS:
+	- TELA: Tela ativa (para ativar o respectivo item no menu). 
+		Valores aceitos: 'HOME', 'SOLIC_PASS', 'SOLIC_VISTO', 'ACOMPANHAR_SOLIC'
+-->
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" 	 prefix="c" %>
 
