@@ -44,21 +44,36 @@ public class SolicitacaoPassaporteJdbcDao implements SolicitacaoPassaporteDao {
 	
 	@Override
 	public long criar(SolicitacaoPassaporte solicitacaoPassaporte) {
-		MapSqlParameterSource parameters = new MapSqlParameterSource();
-		parameters.addValue("nomeSolicitante", solicitacaoPassaporte.getNomeSolicitante());
-		parameters.addValue("cpfSolicitante", solicitacaoPassaporte.getCpfSolicitante());
-		parameters.addValue("rgSolicitante", solicitacaoPassaporte.getRgSolicitante());
-		parameters.addValue("previsaoSaida", solicitacaoPassaporte.getPrevisaoSaida());
-		parameters.addValue("status", solicitacaoPassaporte.getStatus().toString());
-		parameters.addValue("motivoRecusa", solicitacaoPassaporte.getMotivoRecusa());
-		parameters.addValue("observacao", solicitacaoPassaporte.getObservacao());
-		parameters.addValue("dataSolicitacao", solicitacaoPassaporte.getDataSolicitacao());
+		MapSqlParameterSource parameters = getMapCamposEditaveis(solicitacaoPassaporte);
 		parameters.addValue("idUsuario", solicitacaoPassaporte.getIdUsuario());
 
 		KeyHolder idGerado = new GeneratedKeyHolder();
 		
 		jdbcTemplate.update(QueryUtil.getQueryByName("solicitacao.passaporte.criar"), parameters, idGerado);
 		return idGerado.getKey().longValue();
+	}
+
+	@Override
+	public boolean editar(SolicitacaoPassaporte solicitacaoPassaporte) {
+		MapSqlParameterSource parameters = getMapCamposEditaveis(solicitacaoPassaporte);
+		parameters.addValue("id", solicitacaoPassaporte.getId());
+		parameters.addValue("idUsuario", solicitacaoPassaporte.getIdUsuario());
+
+		return jdbcTemplate.update(QueryUtil.getQueryByName("solicitacao.passaporte.editar"), parameters) == 1;
+	}
+
+	private MapSqlParameterSource getMapCamposEditaveis(SolicitacaoPassaporte solicitacaoPassaporte) {
+		MapSqlParameterSource parameters = new MapSqlParameterSource();
+		parameters.addValue("nomeSolicitante", solicitacaoPassaporte.getNomeSolicitante());
+		parameters.addValue("cpfSolicitante", solicitacaoPassaporte.getCpfSolicitante());
+		parameters.addValue("rgSolicitante", solicitacaoPassaporte.getRgSolicitante());
+		parameters.addValue("previsaoSaida", solicitacaoPassaporte.getPrevisaoSaida());
+		parameters.addValue("status", solicitacaoPassaporte.getStatus().name());
+		parameters.addValue("motivoRecusa", solicitacaoPassaporte.getMotivoRecusa());
+		parameters.addValue("observacao", solicitacaoPassaporte.getObservacao());
+		parameters.addValue("dataSolicitacao", solicitacaoPassaporte.getDataSolicitacao());
+		
+		return parameters;
 	}
 
 	@Override
@@ -84,21 +99,34 @@ public class SolicitacaoPassaporteJdbcDao implements SolicitacaoPassaporteDao {
 	}
 
 	@Override
-	public void alterarStatus(SolicitacaoPassaporte solicitacaoPassaporte) {
+	public boolean alterarStatus(SolicitacaoPassaporte solicitacaoPassaporte) {
 		MapSqlParameterSource parameters = new MapSqlParameterSource();
 		parameters.addValue("id", solicitacaoPassaporte.getId());
-		parameters.addValue("status", solicitacaoPassaporte.getStatus());
+		parameters.addValue("status", solicitacaoPassaporte.getStatus().name());
 
-		jdbcTemplate.update(QueryUtil.getQueryByName("solicitacao.passaporte.alterar.status"), parameters);
+		return jdbcTemplate.update(QueryUtil.getQueryByName("solicitacao.passaporte.alterar.status"), parameters) == 1;
+	}
+
+	/**
+	 * Faz verificação do id do usuário para constatar se o mesmo é o criador da solicitação, e pode, portanto, alterá-la.
+	 */
+	@Override
+	public boolean alterarStatusVerificaUsuario(SolicitacaoPassaporte solicitacaoPassaporte) {
+		MapSqlParameterSource parameters = new MapSqlParameterSource();
+		parameters.addValue("id", solicitacaoPassaporte.getId());
+		parameters.addValue("status", solicitacaoPassaporte.getStatus().name());
+		parameters.addValue("idUsuario", solicitacaoPassaporte.getIdUsuario());
+
+		return jdbcTemplate.update(QueryUtil.getQueryByName("solicitacao.passaporte.alterar.status.verifica.usuario"), parameters) == 1;
 	}
 
 	@Override
-	public void recusar(SolicitacaoPassaporte solicitacaoPassaporte) {
+	public boolean recusar(SolicitacaoPassaporte solicitacaoPassaporte) {
 		MapSqlParameterSource parameters = new MapSqlParameterSource();
 		parameters.addValue("id", solicitacaoPassaporte.getId());
-		parameters.addValue("status", solicitacaoPassaporte.getStatus());
+		parameters.addValue("status", solicitacaoPassaporte.getStatus().name());
 		parameters.addValue("motivoRecusa", solicitacaoPassaporte.getMotivoRecusa());
 
-		jdbcTemplate.update(QueryUtil.getQueryByName("solicitacao.passaporte.recusar"), parameters);
+		return jdbcTemplate.update(QueryUtil.getQueryByName("solicitacao.passaporte.recusar"), parameters) == 1;
 	}
 }

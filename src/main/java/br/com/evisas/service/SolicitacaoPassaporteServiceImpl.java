@@ -33,6 +33,16 @@ public class SolicitacaoPassaporteServiceImpl implements SolicitacaoPassaporteSe
 	}
 
 	@Override
+	public void editar(SolicitacaoPassaporte solicitacaoPassaporte) {
+		solicitacaoPassaporte.setStatus(Status.PENDENTE);
+		solicitacaoPassaporte.setDataSolicitacao(LocalDateTime.now());
+		boolean editou = solicitacaoPassaporteDao.editar(solicitacaoPassaporte);
+		if (!editou) {
+			throw new BusinessException("msg.erro.editar.solicitacao");
+		}
+	}
+
+	@Override
 	public List<SolicitacaoPassaporte> buscarPorUsuario(long idUsuario) {
 		return solicitacaoPassaporteDao.buscarPorUsuario(idUsuario);
 	}
@@ -49,5 +59,20 @@ public class SolicitacaoPassaporteServiceImpl implements SolicitacaoPassaporteSe
 
 	private boolean temPermissaoAcesso(Autenticador autenticador, SolicitacaoDeDocumento solicitacao) {
 		return autenticador.isFuncionario() || autenticador.getId() == solicitacao.getIdUsuario();
+	}
+
+	@Override
+	public void alterarStatus(SolicitacaoPassaporte solicitacaoPassaporte, Autenticador autenticador) {
+		boolean alterou = false;
+		if (autenticador.isFuncionario()) {
+			alterou = solicitacaoPassaporteDao.alterarStatus(solicitacaoPassaporte);
+		} else {
+			solicitacaoPassaporte.setIdUsuario(autenticador.getId());
+			alterou = solicitacaoPassaporteDao.alterarStatusVerificaUsuario(solicitacaoPassaporte);
+		}
+		
+		if (!alterou) {
+			throw new BusinessException("msg.erro.alterar.status.solicitacao");
+		}
 	}
 }

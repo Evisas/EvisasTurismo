@@ -15,7 +15,7 @@ public class StringFormatUtils {
 	private final static String FORMATO_TELEFONE_8_DIG = "(##) ####-####";
 	private final static String FORMATO_TELEFONE_9_DIG = "(##) #####-####";
 	private final static DateTimeFormatter FORMATADOR_TIPO_DATA 	 = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-	private final static DateTimeFormatter FORMATADOR_TIPO_DATA_HORA = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+	private final static DateTimeFormatter FORMATADOR_TIPO_DATA_HORA = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm'h'");
 	
 	
 	public static String obterSomenteNumeros(String str) {

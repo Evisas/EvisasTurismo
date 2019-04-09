@@ -62,6 +62,18 @@
 		FROM solicitacoesPassaporte
 		WHERE id = :id
 	]]></query>
+	<query name="solicitacao.passaporte.editar"><![CDATA[
+		UPDATE solicitacoespassaporte
+		SET nomeSolicitante = :nomeSolicitante,
+			cpfSolicitante = :cpfSolicitante,
+			rgSolicitante = :rgSolicitante,
+			dataSolicitacao = :dataSolicitacao,
+			status = :status,
+			observacao = :observacao,
+			previsaoSaida = :previsaoSaida
+		WHERE id = :id
+		AND   idUsuario = :idUsuario
+	]]></query>
 	<query name="solicitacao.passaporte.recusar"><![CDATA[
 		UPDATE solicitacoesPassaporte
 		SET	status 		 = :status,
@@ -70,8 +82,14 @@
 	]]></query>
 	<query name="solicitacao.passaporte.alterar.status"><![CDATA[
 		UPDATE solicitacoesPassaporte
-		SET	status = :status,
+		SET status = :status
 		WHERE id = :id
+	]]></query>
+	<query name="solicitacao.passaporte.alterar.status.verifica.usuario"><![CDATA[
+		UPDATE solicitacoesPassaporte
+		SET status = :status
+		WHERE id = :id
+		AND idUsuario = :idUsuario
 	]]></query>
 <!-- ################################################################################################# -->
 	<query name="solicitacao.visto.criar"><![CDATA[
@@ -127,15 +145,35 @@
 		FROM solicitacoesvisto
 		WHERE id = :id
 	]]></query>
+	<query name="solicitacao.visto.editar"><![CDATA[
+		UPDATE solicitacoesvisto
+		SET nomeSolicitante = :nomeSolicitante,
+			cpfSolicitante = :cpfSolicitante,
+			paisResidencia = :paisResidencia,
+			paisAVisitar = :paisAVisitar,
+			possuiPassaporte = :possuiPassaporte,
+			dataNascimentoSolicitante = :dataNascimentoSolicitante,
+			dataSolicitacao = :dataSolicitacao,
+			status = :status,
+			observacao = :observacao
+		WHERE id = :id
+		AND idUsuario = :idUsuario
+	]]></query>
 	<query name="solicitacao.visto.recusar"><![CDATA[
 		UPDATE solicitacoesvisto
-		SET	status 		 = :status,
+		SET status 		 = :status,
 			motivoRecusa = :motivoRecusa
 		WHERE id = :id
 	]]></query>
 	<query name="solicitacao.visto.alterar.status"><![CDATA[
 		UPDATE solicitacoesvisto
-		SET	status = :status,
+		SET status = :status
 		WHERE id = :id
+	]]></query>
+	<query name="solicitacao.visto.alterar.status.verifica.usuario"><![CDATA[
+		UPDATE solicitacoesvisto
+		SET status = :status
+		WHERE id = :id
+		AND idUsuario = :idUsuario
 	]]></query>
 </sql>

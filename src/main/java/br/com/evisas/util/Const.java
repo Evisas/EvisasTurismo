@@ -6,4 +6,5 @@ public class Const {
 	
 	public static final String USUARIO = "usuario";
 	public static final String FUNCIONARIO = "funcionario";
+	public static final String EH_EDICAO = "ehEdicao"; // em caso de erro, volta para tela de consulta com campos habilitados para edição
 }

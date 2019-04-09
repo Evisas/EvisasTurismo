@@ -53,7 +53,7 @@ public class SolicitacaoVistoJdbcDao implements SolicitacaoVistoDao {
 		parameters.addValue("paisAVisitar", solicitacaoVisto.getPaisAVisitar());
 		parameters.addValue("possuiPassaporte", solicitacaoVisto.getPossuiPassaporte());
 		parameters.addValue("dataNascimentoSolicitante", solicitacaoVisto.getDataNascimentoSolicitante());
-		parameters.addValue("status", solicitacaoVisto.getStatus().toString());
+		parameters.addValue("status", solicitacaoVisto.getStatus().name());
 		parameters.addValue("motivoRecusa", solicitacaoVisto.getMotivoRecusa());
 		parameters.addValue("observacao", solicitacaoVisto.getObservacao());
 		parameters.addValue("dataSolicitacao", solicitacaoVisto.getDataSolicitacao());
@@ -91,7 +91,7 @@ public class SolicitacaoVistoJdbcDao implements SolicitacaoVistoDao {
 	public void alterarStatus(SolicitacaoVisto solicitacaoVisto) {
 		MapSqlParameterSource parameters = new MapSqlParameterSource();
 		parameters.addValue("id", solicitacaoVisto.getId());
-		parameters.addValue("status", solicitacaoVisto.getStatus());
+		parameters.addValue("status", solicitacaoVisto.getStatus().name());
 
 		jdbcTemplate.update(QueryUtil.getQueryByName("solicitacao.visto.alterar.status"), parameters);
 	}
@@ -100,7 +100,7 @@ public class SolicitacaoVistoJdbcDao implements SolicitacaoVistoDao {
 	public void recusar(SolicitacaoVisto solicitacaoVisto) {
 		MapSqlParameterSource parameters = new MapSqlParameterSource();
 		parameters.addValue("id", solicitacaoVisto.getId());
-		parameters.addValue("status", solicitacaoVisto.getStatus());
+		parameters.addValue("status", solicitacaoVisto.getStatus().name());
 		parameters.addValue("motivoRecusa", solicitacaoVisto.getMotivoRecusa());
 
 		jdbcTemplate.update(QueryUtil.getQueryByName("solicitacao.visto.recusar"), parameters);

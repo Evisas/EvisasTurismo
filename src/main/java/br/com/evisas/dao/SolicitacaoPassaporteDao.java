@@ -6,9 +6,11 @@ import br.com.evisas.entity.SolicitacaoPassaporte;
 
 public interface SolicitacaoPassaporteDao {
 	public long criar(SolicitacaoPassaporte solicitacaoPassaporte);
+	public boolean editar(SolicitacaoPassaporte solicitacaoPassaporte);
 	public List<SolicitacaoPassaporte> listar();
 	public List<SolicitacaoPassaporte> buscarPorUsuario(long idUsuario);
 	public SolicitacaoPassaporte buscarPorId(long id);
-	public void alterarStatus(SolicitacaoPassaporte solicitacaoPassaporte);
-	public void recusar(SolicitacaoPassaporte solicitacaoPassaporte);
+	public boolean alterarStatus(SolicitacaoPassaporte solicitacaoPassaporte);
+	public boolean alterarStatusVerificaUsuario(SolicitacaoPassaporte solicitacaoPassaporte);
+	public boolean recusar(SolicitacaoPassaporte solicitacaoPassaporte);
 }
