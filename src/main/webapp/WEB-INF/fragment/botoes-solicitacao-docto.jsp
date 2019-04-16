@@ -36,12 +36,18 @@
 $(document).ready(function(){
 	$("input#preparar-editar").click(function(){
 		$(".editavel").attr("disabled", false);
+		$("div.documento-baixar").hide();
+		$("div.documento-informar").show();
+		
 		$("form.form-solicit-docto").attr("action", "edicaoSolicitacaoPassaporte");
 		$("input#cancelar-edicao, input#editar").show();
 		$("input#preparar-editar,#cancelar-solicitacao").hide();
 	});
 	$("input#cancelar-edicao").click(function(){
 		$(".editavel").attr("disabled", true);
+		$("div.documento-baixar").show();
+		$("div.documento-informar").hide();
+
 		$("input#cancelar-edicao, input#editar").hide();
 		$("input#preparar-editar,#cancelar-solicitacao").show();
 	});

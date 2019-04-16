@@ -13,8 +13,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import br.com.evisas.config.validator.FileExtension;
 import br.com.evisas.config.validator.FileExtension.Type;
-import br.com.evisas.util.StringFormatUtils;
 import br.com.evisas.config.validator.FileSize;
+import br.com.evisas.util.StringFormatUtils;
 
 @Component
 public class SolicitacaoVisto extends SolicitacaoDeDocumento {
@@ -38,7 +38,7 @@ public class SolicitacaoVisto extends SolicitacaoDeDocumento {
 	@FileSize(max=20*1024*1024) // 20Mb
 	@FileExtension(extensions="pdf,doc,docx,zip,rar,jpg,jpeg,png,bmp", type=Type.ONLY)
 	private MultipartFile documento;
-	
+
 	public String getPaisDeResidencia() {
 		return paisDeResidencia;
 	}

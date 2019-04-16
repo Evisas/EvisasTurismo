@@ -28,8 +28,14 @@ public class SolicitacaoPassaporteServiceImpl implements SolicitacaoPassaporteSe
 		solicitacaoPassaporte.setStatus(Status.PENDENTE);
 		solicitacaoPassaporte.setDataSolicitacao(LocalDateTime.now());
 	
-		long id = solicitacaoPassaporteDao.criar(solicitacaoPassaporte);
-		solicitacaoPassaporte.setId(id);
+		try {
+			long id = solicitacaoPassaporteDao.criar(solicitacaoPassaporte);
+			solicitacaoPassaporte.setId(id);
+		} catch (BusinessException e) {
+			solicitacaoPassaporte.setStatus(null);
+			solicitacaoPassaporte.setDataSolicitacao(null);
+			throw e;
+		}
 	}
 
 	@Override

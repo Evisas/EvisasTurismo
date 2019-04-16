@@ -42,11 +42,14 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<scope>runtime</scope>
 		</dependency>
+		
+		<!-- OBS: Coloco esta dependência em escopo geral (ao invés de somente teste) para usar a classe 'MockMultipartFile'
+			 para leitura de arquivos para o formato 'MultipartFile' utilizado. -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
+<!--		<scope>test</scope>
+-->		</dependency>
 		
 		<!-- Exclude Spring Boot's Default Logging -->
 		<dependency>

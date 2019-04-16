@@ -22,7 +22,7 @@ public class FileExtensionValidator implements ConstraintValidator<FileExtension
 	
 	@Override
 	public boolean isValid(MultipartFile file, ConstraintValidatorContext context) {
-		if (file.isEmpty() || fileExtension.extensions().isEmpty()) {
+		if (file == null || file.isEmpty() || fileExtension.extensions().isEmpty()) {
 			return true;
 		}
 		String extensaoArquivo = StringUtils.getFilenameExtension(file.getOriginalFilename());

@@ -3,6 +3,7 @@
 	- TITULO: Título da página
 	- TIPO_SOLICITACAO: Tipo da solicitação ('PASSAPORTE' ou 'VISTO')
 	- FORM_ACTION: Action do formulário
+	- HAS_FILE: true or false (default)
 -->
 <!DOCTYPE html>
 
@@ -22,8 +23,12 @@
 	<div id="content" class="container text-center">
 		<h1 class="titulo"><strong>${param.TITULO}</strong></h1>
 		<%@include file="../fragment/alert-messages.jspf"%>
-		
-		<form:form methodParam="post" action="${param.FORM_ACTION}" modelAttribute="solicitacao" cssClass="form form-solicit-docto rounded-lg" novalidate="true">
+		<form:form methodParam="post" 
+				   action="${param.FORM_ACTION}" 
+				   modelAttribute="solicitacao" 
+				   cssClass="form form-solicit-docto rounded-lg"
+				   enctype="${param.HAS_FILE ? 'multipart/form-data' : 'application/x-www-form-urlencoded'}" 
+				   novalidate="true">
 
 			<c:if test="${not ESTAH_CRIANDO_SOLICITACAO}">
 				<div class="badge badge-secondary text-wrap">Data da Solicitação: ${solicitacao.dataSolicitacaoFormatada}</div><br/>

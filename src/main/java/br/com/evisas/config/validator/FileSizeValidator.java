@@ -16,7 +16,7 @@ public class FileSizeValidator implements ConstraintValidator<FileSize, Multipar
 	
 	@Override
 	public boolean isValid(MultipartFile file, ConstraintValidatorContext context) {
-		if (file.isEmpty()) {
+		if (file == null || file.isEmpty()) {
 			return true;
 		}
 		return file.getSize() >= fileSize.min() && file.getSize() <= fileSize.max();
