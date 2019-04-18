@@ -74,9 +74,12 @@
 	<c:when test="${not empty solicitacao.documento}"><a href="baixarDocumentoSolicitacaoVisto?id=${solicitacao.id}">Baixar documento anexo</a></c:when>
 	<c:otherwise><span class="text-muted">(não tem documento anexo)</span></c:otherwise>
 	</c:choose>
+	<div class="opt-docto-informar" style="display: none;">
+		| <input type="button" id="informarNovoDocumento" class="btn btn-link" style="padding:0; border-width: 0 4px;" data-toggle="collapse" data-target="#documento-informar" value="Informar Novo" />
+	</div>
 </div>
 
-<div class="form-group documento-informar" style="display: ${IS_MODO_CONSULTA ? 'none' : 'auto'};">
+<div id="documento-informar" class="form-group ${ESTAH_CRIANDO_SOLICITACAO ? '' : 'collapse'}">
 <spring:bind path="documento">
 	<label for="documento">Anexar documento:</label><br />
 	<form:input type="file" id="documento" path="documento" extension="pdf,doc,docx,zip,rar,jpg,jpeg,png,bmp"

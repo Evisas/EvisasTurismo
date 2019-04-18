@@ -46,6 +46,25 @@ public class SolicitacaoVistoJdbcDao implements SolicitacaoVistoDao {
 
 	@Override
 	public long criar(SolicitacaoVisto solicitacaoVisto) {
+		MapSqlParameterSource parameters = getMapCamposEditaveisUsuario(solicitacaoVisto);
+		parameters.addValue("idUsuario", solicitacaoVisto.getIdUsuario());
+
+		KeyHolder idGerado = new GeneratedKeyHolder();
+		
+		jdbcTemplate.update(QueryUtil.getQueryByName("solicitacao.visto.criar"), parameters, idGerado);
+		return idGerado.getKey().longValue();
+	}
+
+	@Override
+	public boolean editar(SolicitacaoVisto solicitacaoVisto) {
+		MapSqlParameterSource parameters = getMapCamposEditaveisUsuario(solicitacaoVisto);
+		parameters.addValue("id", solicitacaoVisto.getId());
+		parameters.addValue("idUsuario", solicitacaoVisto.getIdUsuario());
+
+		return jdbcTemplate.update(QueryUtil.getQueryByName("solicitacao.visto.editar"), parameters) == 1;
+	}
+
+	private MapSqlParameterSource getMapCamposEditaveisUsuario(SolicitacaoVisto solicitacaoVisto) {
 		MapSqlParameterSource parameters = new MapSqlParameterSource();
 		parameters.addValue("nomeSolicitante", solicitacaoVisto.getNomeSolicitante());
 		parameters.addValue("cpfSolicitante", solicitacaoVisto.getCpfSolicitante());
@@ -54,15 +73,10 @@ public class SolicitacaoVistoJdbcDao implements SolicitacaoVistoDao {
 		parameters.addValue("possuiPassaporte", solicitacaoVisto.getPossuiPassaporte());
 		parameters.addValue("dataNascimentoSolicitante", solicitacaoVisto.getDataNascimentoSolicitante());
 		parameters.addValue("status", solicitacaoVisto.getStatus().name());
-		parameters.addValue("motivoRecusa", solicitacaoVisto.getMotivoRecusa());
 		parameters.addValue("observacao", solicitacaoVisto.getObservacao());
 		parameters.addValue("dataSolicitacao", solicitacaoVisto.getDataSolicitacao());
-		parameters.addValue("idUsuario", solicitacaoVisto.getIdUsuario());
-
-		KeyHolder idGerado = new GeneratedKeyHolder();
 		
-		jdbcTemplate.update(QueryUtil.getQueryByName("solicitacao.visto.criar"), parameters, idGerado);
-		return idGerado.getKey().longValue();
+		return parameters;
 	}
 
 	@Override
@@ -88,12 +102,25 @@ public class SolicitacaoVistoJdbcDao implements SolicitacaoVistoDao {
 	}
 
 	@Override
-	public void alterarStatus(SolicitacaoVisto solicitacaoVisto) {
+	public boolean alterarStatus(SolicitacaoVisto solicitacaoVisto) {
 		MapSqlParameterSource parameters = new MapSqlParameterSource();
 		parameters.addValue("id", solicitacaoVisto.getId());
 		parameters.addValue("status", solicitacaoVisto.getStatus().name());
 
-		jdbcTemplate.update(QueryUtil.getQueryByName("solicitacao.visto.alterar.status"), parameters);
+		return jdbcTemplate.update(QueryUtil.getQueryByName("solicitacao.visto.alterar.status"), parameters) == 1;
+	}
+
+	/**
+	 * Faz verificação do id do usuário para constatar se o mesmo é o criador da solicitação, e pode, portanto, alterá-la.
+	 */
+	@Override
+	public boolean alterarStatusVerificaUsuario(SolicitacaoVisto solicitacaoVisto) {
+		MapSqlParameterSource parameters = new MapSqlParameterSource();
+		parameters.addValue("id", solicitacaoVisto.getId());
+		parameters.addValue("status", solicitacaoVisto.getStatus().name());
+		parameters.addValue("idUsuario", solicitacaoVisto.getIdUsuario());
+
+		return jdbcTemplate.update(QueryUtil.getQueryByName("solicitacao.visto.alterar.status.verifica.usuario"), parameters) == 1;
 	}
 
 	@Override

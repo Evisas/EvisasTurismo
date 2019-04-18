@@ -7,10 +7,12 @@ import br.com.evisas.entity.SolicitacaoVisto;
 public interface SolicitacaoVistoDao {
 
 	long criar(SolicitacaoVisto solicitacaoVisto);
-	public List<SolicitacaoVisto> listar();
-	public List<SolicitacaoVisto> buscarPorUsuario(long idUsuario);
-	public SolicitacaoVisto buscarPorId(long id);
-	public void alterarStatus(SolicitacaoVisto solicitacaoVisto);
-	public void recusar(SolicitacaoVisto solicitacaoVisto);
+	boolean editar(SolicitacaoVisto solicitacaoVisto);
+	List<SolicitacaoVisto> listar();
+	List<SolicitacaoVisto> buscarPorUsuario(long idUsuario);
+	SolicitacaoVisto buscarPorId(long id);
+	boolean alterarStatus(SolicitacaoVisto solicitacaoVisto);
+	boolean alterarStatusVerificaUsuario(SolicitacaoVisto solicitacaoVisto);
+	void recusar(SolicitacaoVisto solicitacaoVisto);
 
 }

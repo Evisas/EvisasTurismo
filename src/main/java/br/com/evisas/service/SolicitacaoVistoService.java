@@ -10,7 +10,9 @@ import br.com.evisas.entity.Usuario;
 
 public interface SolicitacaoVistoService {
 	void criar(SolicitacaoVisto solicitacaoVisto);
-	public List<SolicitacaoVisto> buscarPorUsuario(long idUsuario);
-	public SolicitacaoVisto buscarPorId(long id, Autenticador autenticador);
+	void editar(SolicitacaoVisto solicitacaoVisto);
+	List<SolicitacaoVisto> buscarPorUsuario(long idUsuario);
+	SolicitacaoVisto buscarPorId(long id, Autenticador autenticador);
 	MultipartFile buscarDocumentoSolicitacaoVisto(Long id, Usuario usuario);
+	void alterarStatus(SolicitacaoVisto solicitacaoVisto, Autenticador autenticador);
 }

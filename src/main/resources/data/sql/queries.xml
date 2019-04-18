@@ -17,9 +17,9 @@
 <!-- ################################################################################################# -->
 	<query name="solicitacao.passaporte.criar"><![CDATA[
 		INSERT INTO solicitacoesPassaporte 
-			(nomeSolicitante, cpfSolicitante, rgSolicitante, dataSolicitacao, status, observacao, motivoRecusa, previsaoSaida, idUsuario)
+			(nomeSolicitante, cpfSolicitante, rgSolicitante, dataSolicitacao, status, observacao, previsaoSaida, idUsuario)
 		VALUES 
-			(:nomeSolicitante, :cpfSolicitante, :rgSolicitante, :dataSolicitacao, :status, :observacao, :motivoRecusa, :previsaoSaida, :idUsuario)
+			(:nomeSolicitante, :cpfSolicitante, :rgSolicitante, :dataSolicitacao, :status, :observacao, :previsaoSaida, :idUsuario)
 	]]></query>
 	<query name="solicitacao.passaporte.listar"><![CDATA[
 		SELECT id,
@@ -94,9 +94,9 @@
 <!-- ################################################################################################# -->
 	<query name="solicitacao.visto.criar"><![CDATA[
 		INSERT INTO solicitacoesvisto
-			(nomeSolicitante, cpfSolicitante, paisResidencia, paisAVisitar, possuiPassaporte, dataNascimentoSolicitante, dataSolicitacao, status, observacao, motivoRecusa, idUsuario)
+			(nomeSolicitante, cpfSolicitante, paisResidencia, paisAVisitar, possuiPassaporte, dataNascimentoSolicitante, dataSolicitacao, status, observacao, idUsuario)
 		VALUES
-			(:nomeSolicitante, :cpfSolicitante, :paisResidencia, :paisAVisitar, :possuiPassaporte, :dataNascimentoSolicitante, :dataSolicitacao, :status, :observacao, :motivoRecusa, :idUsuario)
+			(:nomeSolicitante, :cpfSolicitante, :paisResidencia, :paisAVisitar, :possuiPassaporte, :dataNascimentoSolicitante, :dataSolicitacao, :status, :observacao, :idUsuario)
 	]]></query>
 	<query name="solicitacao.visto.listar"><![CDATA[
 		SELECT id,

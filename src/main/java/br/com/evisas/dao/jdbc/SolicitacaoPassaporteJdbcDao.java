@@ -44,7 +44,7 @@ public class SolicitacaoPassaporteJdbcDao implements SolicitacaoPassaporteDao {
 	
 	@Override
 	public long criar(SolicitacaoPassaporte solicitacaoPassaporte) {
-		MapSqlParameterSource parameters = getMapCamposEditaveis(solicitacaoPassaporte);
+		MapSqlParameterSource parameters = getMapCamposEditaveisUsuario(solicitacaoPassaporte);
 		parameters.addValue("idUsuario", solicitacaoPassaporte.getIdUsuario());
 
 		KeyHolder idGerado = new GeneratedKeyHolder();
@@ -55,21 +55,20 @@ public class SolicitacaoPassaporteJdbcDao implements SolicitacaoPassaporteDao {
 
 	@Override
 	public boolean editar(SolicitacaoPassaporte solicitacaoPassaporte) {
-		MapSqlParameterSource parameters = getMapCamposEditaveis(solicitacaoPassaporte);
+		MapSqlParameterSource parameters = getMapCamposEditaveisUsuario(solicitacaoPassaporte);
 		parameters.addValue("id", solicitacaoPassaporte.getId());
 		parameters.addValue("idUsuario", solicitacaoPassaporte.getIdUsuario());
 
 		return jdbcTemplate.update(QueryUtil.getQueryByName("solicitacao.passaporte.editar"), parameters) == 1;
 	}
 
-	private MapSqlParameterSource getMapCamposEditaveis(SolicitacaoPassaporte solicitacaoPassaporte) {
+	private MapSqlParameterSource getMapCamposEditaveisUsuario(SolicitacaoPassaporte solicitacaoPassaporte) {
 		MapSqlParameterSource parameters = new MapSqlParameterSource();
 		parameters.addValue("nomeSolicitante", solicitacaoPassaporte.getNomeSolicitante());
 		parameters.addValue("cpfSolicitante", solicitacaoPassaporte.getCpfSolicitante());
 		parameters.addValue("rgSolicitante", solicitacaoPassaporte.getRgSolicitante());
 		parameters.addValue("previsaoSaida", solicitacaoPassaporte.getPrevisaoSaida());
 		parameters.addValue("status", solicitacaoPassaporte.getStatus().name());
-		parameters.addValue("motivoRecusa", solicitacaoPassaporte.getMotivoRecusa());
 		parameters.addValue("observacao", solicitacaoPassaporte.getObservacao());
 		parameters.addValue("dataSolicitacao", solicitacaoPassaporte.getDataSolicitacao());
 		

@@ -15,10 +15,9 @@ import br.com.evisas.config.businessError.BusinessException;
 import br.com.evisas.dao.SolicitacaoVistoDao;
 import br.com.evisas.entity.Autenticador;
 import br.com.evisas.entity.SolicitacaoDeDocumento;
+import br.com.evisas.entity.SolicitacaoDeDocumento.Status;
 import br.com.evisas.entity.SolicitacaoVisto;
 import br.com.evisas.entity.Usuario;
-import br.com.evisas.entity.SolicitacaoDeDocumento.Status;
-import br.com.evisas.util.FileUtil;
 
 @Service
 @Transactional(propagation = Propagation.NOT_SUPPORTED)
@@ -36,6 +35,9 @@ public class SolicitacaoVistoServiceImpl implements SolicitacaoVistoService {
 	@Autowired
 	private SolicitacaoVistoDao solicitacaoVistoDao;
 	
+	@Autowired
+	private FileService fileService;
+	
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void criar(SolicitacaoVisto solicitacaoVisto) {
@@ -45,7 +47,31 @@ public class SolicitacaoVistoServiceImpl implements SolicitacaoVistoService {
 		try {
 			long id = solicitacaoVistoDao.criar(solicitacaoVisto);
 			solicitacaoVisto.setId(id);
-			FileUtil.gravarArquivo(montarPathDoctoSolicitacaoVisto(solicitacaoVisto), solicitacaoVisto.getDocumento());
+			fileService.gravarArquivo(montarPathDoctoSolicitacaoVisto(solicitacaoVisto), solicitacaoVisto.getDocumento());
+		} catch (BusinessException e) {
+			solicitacaoVisto.setStatus(null);
+			solicitacaoVisto.setDataSolicitacao(null);
+			throw e;
+		}
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED)
+	public void editar(SolicitacaoVisto solicitacaoVisto) {
+		solicitacaoVisto.setStatus(Status.PENDENTE);
+		solicitacaoVisto.setDataSolicitacao(LocalDateTime.now());
+		try {
+			boolean editou = solicitacaoVistoDao.editar(solicitacaoVisto);
+			if (!editou) {
+				throw new BusinessException("msg.erro.editar.solicitacao");
+			}
+			if (solicitacaoVisto.getDocumento() != null) {
+				fileService.removerArquivoQualquerExtensao(montarPathBuscaDoctoSolicitacaoVisto(solicitacaoVisto));
+				if (!solicitacaoVisto.getDocumento().isEmpty()) {
+					fileService.gravarArquivo(montarPathDoctoSolicitacaoVisto(solicitacaoVisto), solicitacaoVisto.getDocumento());
+				}
+			}
+			
 		} catch (BusinessException e) {
 			solicitacaoVisto.setStatus(null);
 			solicitacaoVisto.setDataSolicitacao(null);
@@ -62,7 +88,7 @@ public class SolicitacaoVistoServiceImpl implements SolicitacaoVistoService {
 	public SolicitacaoVisto buscarPorId(long id, Autenticador autenticador) {
 		SolicitacaoVisto solicitacaoVisto = solicitacaoVistoDao.buscarPorId(id);
 		if (temPermissaoAcesso(autenticador, solicitacaoVisto)) {
-			solicitacaoVisto.setDocumento(FileUtil.buscarArquivoQualquerExtensao(montarPathBuscaDoctoSolicitacaoVisto(solicitacaoVisto), NOME_DOCTO_SOLICITACAO_VISTO));
+			solicitacaoVisto.setDocumento(fileService.buscarArquivoMultipartQualquerExtensao(montarPathBuscaDoctoSolicitacaoVisto(solicitacaoVisto), NOME_DOCTO_SOLICITACAO_VISTO));
 			return solicitacaoVisto;
 		} else {
 			throw new BusinessException("msg.erro.permissao.acesso.solicitacao");
@@ -74,7 +100,7 @@ public class SolicitacaoVistoServiceImpl implements SolicitacaoVistoService {
 		SolicitacaoVisto solicitacaoVisto = new SolicitacaoVisto();
 		solicitacaoVisto.setId(id);
 		solicitacaoVisto.setIdUsuario(usuario.getId());
-		return FileUtil.buscarArquivoQualquerExtensao(montarPathBuscaDoctoSolicitacaoVisto(solicitacaoVisto), NOME_DOCTO_SOLICITACAO_VISTO);
+		return fileService.buscarArquivoMultipartQualquerExtensao(montarPathBuscaDoctoSolicitacaoVisto(solicitacaoVisto), NOME_DOCTO_SOLICITACAO_VISTO);
 	}
 
 	private String montarPathDoctoSolicitacaoVisto(SolicitacaoVisto solicitacaoVisto) {
@@ -92,5 +118,21 @@ public class SolicitacaoVistoServiceImpl implements SolicitacaoVistoService {
 
 	private boolean temPermissaoAcesso(Autenticador autenticador, SolicitacaoDeDocumento solicitacao) {
 		return autenticador.isFuncionario() || autenticador.getId() == solicitacao.getIdUsuario();
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED)
+	public void alterarStatus(SolicitacaoVisto solicitacaoVisto, Autenticador autenticador) {
+		boolean alterou = false;
+		if (autenticador.isFuncionario()) {
+			alterou = solicitacaoVistoDao.alterarStatus(solicitacaoVisto);
+		} else {
+			solicitacaoVisto.setIdUsuario(autenticador.getId());
+			alterou = solicitacaoVistoDao.alterarStatusVerificaUsuario(solicitacaoVisto);
+		}
+		
+		if (!alterou) {
+			throw new BusinessException("msg.erro.alterar.status.solicitacao");
+		}
 	}
 }

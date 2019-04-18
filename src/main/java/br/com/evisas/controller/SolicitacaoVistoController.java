@@ -22,6 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import br.com.evisas.config.businessError.HandleBusinessError;
 import br.com.evisas.entity.SolicitacaoVisto;
 import br.com.evisas.entity.Usuario;
+import br.com.evisas.entity.SolicitacaoDeDocumento.Status;
 import br.com.evisas.service.SolicitacaoVistoService;
 import br.com.evisas.util.Const;
 
@@ -67,5 +68,39 @@ public class SolicitacaoVistoController {
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + file.getName())
 				.contentLength(file.getSize())
 				.body(new InputStreamResource(file.getInputStream()));
+	}
+	
+	@GetMapping("/cancelamentoSolicitacaoVisto")
+	@HandleBusinessError(errorPage="solicitacao/solicitacaoVisto")
+	public String cancelarSolicitacaoVisto(@RequestParam Long id, RedirectAttributes redirectAttr, HttpSession session) {
+		Usuario usuario = (Usuario) session.getAttribute(Const.USUARIO);
+		SolicitacaoVisto solicitacaoVisto = new SolicitacaoVisto();
+		solicitacaoVisto.setId(id);
+		solicitacaoVisto.setStatus(Status.CANCELADA);
+		
+		solicitacaoVistoService.alterarStatus(solicitacaoVisto, usuario);
+
+		redirectAttr.addAttribute("id", id);
+		redirectAttr.addFlashAttribute(Const.STR_COD_MSG_SUCESSO, "msg.sucesso.cancelar.solicitacao.visto");
+		
+		return "redirect:consultaSolicitacaoVisto";
+	}
+
+	@PostMapping("/edicaoSolicitacaoVisto")
+	@HandleBusinessError(errorPage="solicitacao/solicitacaoVisto")
+	public String editarSolicitacaoVisto(@Valid SolicitacaoVisto solicitacao, BindingResult result, Model model, RedirectAttributes redirectAttr, HttpSession session) {
+		model.addAttribute(Const.EH_EDICAO, true);
+		if (result.hasErrors()) {
+			return "solicitacao/solicitacaoVisto";
+		}
+		Usuario usuario = (Usuario) session.getAttribute(Const.USUARIO);
+		solicitacao.setIdUsuario(usuario.getId());
+		
+		solicitacaoVistoService.editar(solicitacao);
+		
+		redirectAttr.addAttribute("id", solicitacao.getId());
+		redirectAttr.addFlashAttribute(Const.STR_COD_MSG_SUCESSO, "msg.sucesso.editar.solicitacao.visto");
+
+		return "redirect:consultaSolicitacaoVisto";
 	}
 }

@@ -39,6 +39,7 @@ public class SolicitacaoPassaporteServiceImpl implements SolicitacaoPassaporteSe
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED)
 	public void editar(SolicitacaoPassaporte solicitacaoPassaporte) {
 		solicitacaoPassaporte.setStatus(Status.PENDENTE);
 		solicitacaoPassaporte.setDataSolicitacao(LocalDateTime.now());
@@ -68,6 +69,7 @@ public class SolicitacaoPassaporteServiceImpl implements SolicitacaoPassaporteSe
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED)
 	public void alterarStatus(SolicitacaoPassaporte solicitacaoPassaporte, Autenticador autenticador) {
 		boolean alterou = false;
 		if (autenticador.isFuncionario()) {
