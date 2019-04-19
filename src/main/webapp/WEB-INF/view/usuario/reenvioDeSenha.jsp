@@ -33,14 +33,5 @@
 
 	<div id="footer"></div>
 	
-	<script type="text/javascript">
-//	TODO: Arrumar, quando não passa na validação do jquery tbm está chamando o método
-//	$(document).ready(function(){
-//		// ao submeter formulário, desabilita botão "submit" para usuário não clicar várias vezes enquanto processa
-//		$("form").submit(function(){
-//			$(this).find("input[type='submit']").prop("disabled", true);
-//		});
-//	});
-	</script>
 </body>
 </html>

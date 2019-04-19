@@ -49,11 +49,11 @@ public class SolicitacaoPassaporteController {
 	@HandleBusinessError(errorPage="solicitacao/acompanhamento")
 	public String consultarSolicitacaoPassaporte(@RequestParam Long id, Model model, HttpSession session) {
 		Usuario usuario = (Usuario) session.getAttribute(Const.USUARIO);
-		model.addAttribute("solicitacao", solicitacaoPassaporteService.buscarPorId(id, usuario));
+		model.addAttribute(Const.SOLICITACAO, solicitacaoPassaporteService.buscarPorId(id, usuario));
 		return "solicitacao/solicitacaoPassaporte";
 	}
 
-	@GetMapping("/cancelarSolicitacaoPassaporte")
+	@GetMapping("/cancelamentoSolicitacaoPassaporte")
 	@HandleBusinessError(errorPage="solicitacao/solicitacaoPassaporte")
 	public String cancelarSolicitacaoPassaporte(@RequestParam Long id, RedirectAttributes redirectAttr, HttpSession session) {
 		Usuario usuario = (Usuario) session.getAttribute(Const.USUARIO);
