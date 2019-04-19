@@ -86,4 +86,10 @@ public class SolicitacaoPassaporteController {
 
 		return "redirect:consultaSolicitacaoPassaporte";
 	}
+	
+	@GetMapping("admin/solicitacoesPassaporte")
+	public String mostrarTelaSolicitacoesPassaporte(Model model) {
+		model.addAttribute("solicitacoesPassaporte", solicitacaoPassaporteService.listar());
+		return "admin/solicitacoesPassaporte";
+	}
 }

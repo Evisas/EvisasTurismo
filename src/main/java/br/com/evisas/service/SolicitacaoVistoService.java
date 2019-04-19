@@ -15,4 +15,5 @@ public interface SolicitacaoVistoService {
 	SolicitacaoVisto buscarPorId(long id, Autenticador autenticador);
 	MultipartFile buscarDocumentoSolicitacaoVisto(Long id, Usuario usuario);
 	void alterarStatus(SolicitacaoVisto solicitacaoVisto, Autenticador autenticador);
+	List<SolicitacaoVisto> listar();
 }

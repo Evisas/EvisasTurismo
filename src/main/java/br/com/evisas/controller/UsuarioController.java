@@ -35,7 +35,7 @@ public class UsuarioController {
 
 	@PostMapping("/login")
 	@HandleBusinessError(errorPage="usuario/login")
-	public String fazerLogin(@Valid Usuario usuario, BindingResult result, Model model, HttpSession session) {
+	public String fazerLogin(@Valid Usuario usuario, BindingResult result, HttpSession session) {
 		if (result.hasFieldErrors("email") || result.hasFieldErrors("senha")) {
 			return "usuario/login";
 		}

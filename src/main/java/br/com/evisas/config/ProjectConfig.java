@@ -34,6 +34,12 @@ public class ProjectConfig implements WebMvcConfigurer {
 													 "/css/**", 
 													 "/images/**", 
 													 "/js/**",
+													 "/admin/**",
 													 "/error");
+
+		registry.addInterceptor(new FuncionarioAutenticationInterceptor())
+								.addPathPatterns("/admin/**")
+								.excludePathPatterns("/admin")
+								.excludePathPatterns("/admin/login");
 	}
 }

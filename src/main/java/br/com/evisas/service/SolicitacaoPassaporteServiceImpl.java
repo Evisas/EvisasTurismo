@@ -83,4 +83,9 @@ public class SolicitacaoPassaporteServiceImpl implements SolicitacaoPassaporteSe
 			throw new BusinessException("msg.erro.alterar.status.solicitacao");
 		}
 	}
+
+	@Override
+	public List<SolicitacaoPassaporte> listar() {
+		return solicitacaoPassaporteDao.listar();
+	}
 }

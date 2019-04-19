@@ -59,3 +59,13 @@ input[type=number] {
 {
 	margin-bottom: 20pt;
 }
+
+.form-login-admin
+{
+	max-width: 250pt;
+	margin: 15pt auto 0 auto;
+}
+.form-login-admin .invalid-feedback
+{
+	color: white;
+}

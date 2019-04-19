@@ -15,6 +15,13 @@
 		VALUES (:nome, :email, :telefone, :senha)
 	]]></query>
 <!-- ################################################################################################# -->
+	<query name="funcionario.buscar.pelo.login"><![CDATA[
+		SELECT id, nome, email, matricula, senha
+		FROM funcionarios
+		WHERE matricula = :matricula
+		AND   senha 	= :senha
+	]]></query>
+<!-- ################################################################################################# -->
 	<query name="solicitacao.passaporte.criar"><![CDATA[
 		INSERT INTO solicitacoesPassaporte 
 			(nomeSolicitante, cpfSolicitante, rgSolicitante, dataSolicitacao, status, observacao, previsaoSaida, idUsuario)
@@ -33,6 +40,7 @@
 		    previsaoSaida,
 			idUsuario
 		FROM solicitacoesPassaporte
+		ORDER BY dataSolicitacao
 	]]></query>
 	<query name="solicitacao.passaporte.buscar.por.usuario"><![CDATA[
 		SELECT id,
@@ -112,6 +120,7 @@
 			motivoRecusa,
 			idUsuario
 		FROM solicitacoesvisto
+		ORDER BY dataSolicitacao
 	]]></query>
 	<query name="solicitacao.visto.buscar.por.usuario"><![CDATA[
 		SELECT id,

@@ -103,4 +103,10 @@ public class SolicitacaoVistoController {
 
 		return "redirect:consultaSolicitacaoVisto";
 	}
+	
+	@GetMapping("admin/solicitacoesVisto")
+	public String mostrarTelaSolicitacoesVisto(Model model) {
+		model.addAttribute("solicitacoesVisto", solicitacaoVistoService.listar());
+		return "admin/solicitacoesVisto";
+	}
 }

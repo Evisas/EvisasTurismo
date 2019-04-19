@@ -135,4 +135,9 @@ public class SolicitacaoVistoServiceImpl implements SolicitacaoVistoService {
 			throw new BusinessException("msg.erro.alterar.status.solicitacao");
 		}
 	}
+
+	@Override
+	public List<SolicitacaoVisto> listar() {
+		return solicitacaoVistoDao.listar();
+	}
 }

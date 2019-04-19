@@ -10,12 +10,6 @@
 		<h2>Cadastro</h2>
 		<%@include file="../../fragment/alert-messages.jspf"%>
 		
-		<%-- 
-		<spring:hasBindErrors name="usuario">
-			<c:set var="voltouDoServidorComErrosValidacao">${not empty errors}</c:set>
-		</spring:hasBindErrors>
-		--%>
-		
 		<form:form methodParam="post" action="cadastro" modelAttribute="usuario" class="form form-cadastro rounded-lg" novalidate="true">
 			<div class="text-left">
 			
