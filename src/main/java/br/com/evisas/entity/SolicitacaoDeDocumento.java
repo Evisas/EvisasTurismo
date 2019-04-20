@@ -37,6 +37,13 @@ public class SolicitacaoDeDocumento {
 
 	private LocalDateTime dataSolicitacao;
 	
+	public SolicitacaoDeDocumento() {}
+
+	public SolicitacaoDeDocumento(long id, Status status) {
+		this.id = id;
+		this.status = status;
+	}
+
 	public long getId() {
 		return id;
 	}

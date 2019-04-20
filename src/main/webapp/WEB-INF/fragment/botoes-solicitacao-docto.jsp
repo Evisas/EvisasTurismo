@@ -7,19 +7,19 @@
  -->
 
 <c:if test="${not empty solicitacao.status}"> <!-- Está consultando (não criando), então tem botão voltar -->
-	<a href="${usuario.funcionario ? '' : 'acompanhamentoSolicitacoes'}" class="btn btn-link">Voltar</a>
+	<a href="${autenticador.funcionario ? 'solicitacoes'.concat(param.COMPL_TIPO_SOLICITACAO) : 'acompanhamentoSolicitacoes'}" class="btn btn-link">Voltar</a>
 </c:if>
-<c:if test="${usuario.funcionario and solicitacao.status eq 'PENDENTE'}">
-	<a href="admin/aceitarSolicitacao${param.COMPL_TIPO_SOLICITACAO}?id=${solicitacao.id}" class="btn btn-success">Aceitar</a>
-	<a href="admin/recusarSolicitacao${param.COMPL_TIPO_SOLICITACAO}?id=${solicitacao.id}" class="btn btn-danger">Recusar</a>
+<c:if test="${autenticador.funcionario and solicitacao.status eq 'PENDENTE'}">
+	<a id="aceitar-solicitacao" acao="aceitar" href="aceitaSolicitacao${param.COMPL_TIPO_SOLICITACAO}?id=${solicitacao.id}" class="modal-confirmacao btn btn-success">Aceitar</a>
+	<a id="recusar-solicitacao" acao="recusar" href="" class="modal-recusa btn btn-danger">Recusar</a>
 </c:if>
-<c:if test="${not usuario.funcionario}">
+<c:if test="${not autenticador.funcionario}">
 	<c:choose>
 		<c:when test="${empty solicitacao.status}"> <!-- Usuário está criando a solicitação -->
 			<input type="submit" value="Solicitar" class="btn btn-primary" />
 		</c:when>
 		<c:when test="${solicitacao.status eq 'PENDENTE'}">
-			<a id="cancelar-solicitacao" acao="cancelar" href="cancelamentoSolicitacao${param.COMPL_TIPO_SOLICITACAO}?id=${solicitacao.id}" class="btn btn-dark">Cancelar Solicitação</a>
+			<a id="cancelar-solicitacao" acao="cancelar" href="cancelamentoSolicitacao${param.COMPL_TIPO_SOLICITACAO}?id=${solicitacao.id}" class="modal-confirmacao btn btn-dark">Cancelar Solicitação</a>
 			<input type="button" id="preparar-editar" value="Editar" class="btn btn-primary" />
 			<input type="button" id="cancelar-edicao" value="Cancelar Edição" class="btn btn-secondary" style="display: none;" />
 			<input type="submit" id="editar" value="Reenviar Solicitação" class="btn btn-primary" style="display: none;" />
@@ -34,6 +34,7 @@
 
 <script type="text/javascript">
 var ACTION_EDICAO_SOLICITACAO = "edicaoSolicitacao" + "${param.COMPL_TIPO_SOLICITACAO}";
+var ACTION_RECUSA_SOLICITACAO = "recusaSolicitacao" + "${param.COMPL_TIPO_SOLICITACAO}";
 
 $(document).ready(function(){
 	$("input#preparar-editar").click(function(){
@@ -57,13 +58,16 @@ $(document).ready(function(){
 	$("#informarNovoDocumento").click(function(){
 		$("input#documento").prop("disabled", !$("input#documento").is(":disabled"));
 	});
-	$("a#cancelar-solicitacao").click(function(){
+	$("a.modal-confirmacao").click(function(){
 		$("#modal-confirmacao .modal-body .acao").text($(this).attr("acao"));
-		$("#modal-confirmacao a.btn-primary").attr("href", $(this).attr("href"));
+		$("#modal-confirmacao .btn-primary").attr("href", $(this).attr("href"));
 		$("#modal-confirmacao").modal();
+		event.preventDefault();	// não chama link por enquanto
+	});
+	$("a.modal-recusa").click(function(){
+		$("#modal-recusa form").attr("action", ACTION_RECUSA_SOLICITACAO);
+		$("#modal-recusa").modal();
 		event.preventDefault();	// não chama link por enquanto
 	});
 });
 </script>
-
-<%@include file="modal-confirmacao.jspf"%>

@@ -12,5 +12,5 @@ public interface SolicitacaoPassaporteDao {
 	SolicitacaoPassaporte buscarPorId(long id);
 	boolean alterarStatus(SolicitacaoPassaporte solicitacaoPassaporte);
 	boolean alterarStatusVerificaUsuario(SolicitacaoPassaporte solicitacaoPassaporte);
-	boolean recusar(SolicitacaoPassaporte solicitacaoPassaporte);
+	boolean alterarStatusEMotivoRecusa(SolicitacaoPassaporte solicitacaoPassaporte);
 }

@@ -10,10 +10,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.evisas.config.businessError.HandleBusinessError;
+import br.com.evisas.entity.Funcionario;
 import br.com.evisas.entity.SolicitacaoDeDocumento.Status;
 import br.com.evisas.entity.SolicitacaoPassaporte;
 import br.com.evisas.entity.Usuario;
@@ -36,7 +38,7 @@ public class SolicitacaoPassaporteController {
 		if (result.hasErrors()) {
 			return "solicitacao/solicitacaoPassaporte";
 		}
-		Usuario usuario = (Usuario) session.getAttribute(Const.USUARIO);
+		Usuario usuario = (Usuario) session.getAttribute(Const.AUTENTICADOR);
 		solicitacao.setIdUsuario(usuario.getId());
 		
 		solicitacaoPassaporteService.criar(solicitacao);
@@ -48,7 +50,7 @@ public class SolicitacaoPassaporteController {
 	@GetMapping("/consultaSolicitacaoPassaporte")
 	@HandleBusinessError(errorPage="solicitacao/acompanhamento")
 	public String consultarSolicitacaoPassaporte(@RequestParam Long id, Model model, HttpSession session) {
-		Usuario usuario = (Usuario) session.getAttribute(Const.USUARIO);
+		Usuario usuario = (Usuario) session.getAttribute(Const.AUTENTICADOR);
 		model.addAttribute(Const.SOLICITACAO, solicitacaoPassaporteService.buscarPorId(id, usuario));
 		return "solicitacao/solicitacaoPassaporte";
 	}
@@ -56,11 +58,8 @@ public class SolicitacaoPassaporteController {
 	@GetMapping("/cancelamentoSolicitacaoPassaporte")
 	@HandleBusinessError(errorPage="solicitacao/solicitacaoPassaporte")
 	public String cancelarSolicitacaoPassaporte(@RequestParam Long id, RedirectAttributes redirectAttr, HttpSession session) {
-		Usuario usuario = (Usuario) session.getAttribute(Const.USUARIO);
-		SolicitacaoPassaporte solicitacaoPassaporte = new SolicitacaoPassaporte();
-		solicitacaoPassaporte.setId(id);
-		solicitacaoPassaporte.setStatus(Status.CANCELADA);
-		
+		Usuario usuario = (Usuario) session.getAttribute(Const.AUTENTICADOR);
+		SolicitacaoPassaporte solicitacaoPassaporte = new SolicitacaoPassaporte(id, Status.CANCELADA);
 		solicitacaoPassaporteService.alterarStatus(solicitacaoPassaporte, usuario);
 
 		redirectAttr.addAttribute("id", id);
@@ -76,7 +75,7 @@ public class SolicitacaoPassaporteController {
 		if (result.hasErrors()) {
 			return "solicitacao/solicitacaoPassaporte";
 		}
-		Usuario usuario = (Usuario) session.getAttribute(Const.USUARIO);
+		Usuario usuario = (Usuario) session.getAttribute(Const.AUTENTICADOR);
 		solicitacao.setIdUsuario(usuario.getId());
 		
 		solicitacaoPassaporteService.editar(solicitacao);
@@ -87,9 +86,48 @@ public class SolicitacaoPassaporteController {
 		return "redirect:consultaSolicitacaoPassaporte";
 	}
 	
+//	------------------------------- MÉDOTOS PARA PERMISSÃO ADMIN -------------------------------
+	
 	@GetMapping("admin/solicitacoesPassaporte")
 	public String mostrarTelaSolicitacoesPassaporte(Model model) {
 		model.addAttribute("solicitacoesPassaporte", solicitacaoPassaporteService.listar());
 		return "admin/solicitacoesPassaporte";
+	}
+
+	@GetMapping("admin/consultaSolicitacaoPassaporte")
+	@HandleBusinessError(errorPage="admin/solicitacoesPassaporte")
+	public String consultarSolicitacaoPassaporteAdmin(@RequestParam Long id, Model model, HttpSession session) {
+		Funcionario funcionario = (Funcionario) session.getAttribute(Const.AUTENTICADOR);
+		model.addAttribute(Const.SOLICITACAO, solicitacaoPassaporteService.buscarPorId(id, funcionario));
+		return "solicitacao/solicitacaoPassaporte";
+	}
+	
+	@GetMapping("admin/aceitaSolicitacaoPassaporte")
+	@HandleBusinessError(errorPage="solicitacao/solicitacaoPassaporte")
+	public String aceitarSolicitacaoPassaporte(@RequestParam Long id, RedirectAttributes redirectAttr, HttpSession session) {
+		Funcionario funcionario = (Funcionario) session.getAttribute(Const.AUTENTICADOR);
+		SolicitacaoPassaporte solicitacaoPassaporte = new SolicitacaoPassaporte(id, Status.ACEITA);
+		solicitacaoPassaporteService.alterarStatusEMotivoRecusa(solicitacaoPassaporte, funcionario);
+
+		redirectAttr.addAttribute("id", id);
+		redirectAttr.addFlashAttribute(Const.STR_COD_MSG_SUCESSO, "msg.sucesso.aceitar.solicitacao.passaporte");
+		
+		return "redirect:consultaSolicitacaoPassaporte";
+	}
+	
+	@RequestMapping("admin/recusaSolicitacaoPassaporte")
+	@HandleBusinessError(errorPage="solicitacao/solicitacaoPassaporte")
+	public String recusarSolicitacaoPassaporte(@Valid @ModelAttribute(Const.SOLICITACAO) SolicitacaoPassaporte solicitacao, BindingResult result, RedirectAttributes redirectAttr, HttpSession session) {
+		if (result.hasFieldErrors("motivoRecusa")) {
+			return "solicitacao/solicitacaoPassaporte";
+		}
+		Funcionario usuario = (Funcionario) session.getAttribute(Const.AUTENTICADOR);
+		solicitacao.setStatus(Status.RECUSADA);
+		solicitacaoPassaporteService.alterarStatusEMotivoRecusa(solicitacao, usuario);
+
+		redirectAttr.addAttribute("id", solicitacao.getId());
+		redirectAttr.addFlashAttribute(Const.STR_COD_MSG_SUCESSO, "msg.sucesso.recusar.solicitacao.passaporte");
+		
+		return "redirect:consultaSolicitacaoPassaporte";
 	}
 }

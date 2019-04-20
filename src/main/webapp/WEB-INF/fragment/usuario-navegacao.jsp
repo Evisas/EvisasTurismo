@@ -10,7 +10,7 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-info">
   <a class="navbar-brand" href="">
   	<img src="/images/logo_sm.png" alt="logotipo" height="40px" class="rounded-lg">
-  	<span class="lead text-light" style="margin: auto 10px;">${usuario.nome}</span>
+  	<span class="lead text-light" style="margin: auto 10px;">${autenticador.nome}</span>
   </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarUsuario" aria-controls="navbarUsuario" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>

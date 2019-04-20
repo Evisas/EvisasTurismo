@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import br.com.evisas.entity.Autenticador;
 import br.com.evisas.util.Const;
 
 public class UsuarioAutenticationInterceptor extends HandlerInterceptorAdapter {
@@ -19,7 +20,8 @@ public class UsuarioAutenticationInterceptor extends HandlerInterceptorAdapter {
 			return true;	// páginas que não precisa-se estar logado, pode continuar...
 		}
 		
-		if(request.getSession().getAttribute(Const.USUARIO) != null) {	// usuário está logado, pode continuar...
+		Autenticador autenticador = (Autenticador) request.getSession().getAttribute(Const.AUTENTICADOR);
+		if(autenticador != null && !autenticador.isFuncionario()) {	// usuário está logado, pode continuar...
 			return true;
 		}
 		

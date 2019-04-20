@@ -26,6 +26,12 @@ public class SolicitacaoPassaporte extends SolicitacaoDeDocumento {
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private LocalDate previsaoSaida;
 
+	public SolicitacaoPassaporte() {}
+
+	public SolicitacaoPassaporte(Long id, Status status) {
+		super(id, status);
+	}
+
 	public String getRgSolicitante() {
 		return rgSolicitante;
 	}

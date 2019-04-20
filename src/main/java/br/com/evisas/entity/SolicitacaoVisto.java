@@ -39,6 +39,12 @@ public class SolicitacaoVisto extends SolicitacaoDeDocumento {
 	@FileExtension(extensions="pdf,doc,docx,zip,rar,jpg,jpeg,png,bmp", type=Type.ONLY)
 	private MultipartFile documento;
 
+	public SolicitacaoVisto() {}
+
+	public SolicitacaoVisto(long id, Status status) {
+		super(id, status);
+	}
+
 	public String getPaisDeResidencia() {
 		return paisDeResidencia;
 	}

@@ -41,7 +41,7 @@ public class UsuarioController {
 		}
 
 		Usuario usuarioBuscado = usuarioServices.buscarPeloLogin(usuario);
-		session.setAttribute(Const.USUARIO, usuarioBuscado);
+		session.setAttribute(Const.AUTENTICADOR, usuarioBuscado);
 		return "redirect:home";
 	}
 
@@ -69,7 +69,7 @@ public class UsuarioController {
 		}
 		
 		usuarioServices.cadastrar(usuario);
-		session.setAttribute(Const.USUARIO, usuario);
+		session.setAttribute(Const.AUTENTICADOR, usuario);
 		redirectAttr.addFlashAttribute(Const.STR_COD_MSG_SUCESSO, "msg.sucesso.cadastro.usuario");
 		return "redirect:home";
 	}

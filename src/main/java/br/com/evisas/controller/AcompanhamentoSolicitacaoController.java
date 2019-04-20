@@ -23,7 +23,7 @@ public class AcompanhamentoSolicitacaoController {
 	
 	@GetMapping("/acompanhamentoSolicitacoes")
 	public String mostrarTelaAcompanhamentoDeSolicitacoes(Model model, HttpSession session) {
-		Usuario usuario = (Usuario) session.getAttribute(Const.USUARIO);
+		Usuario usuario = (Usuario) session.getAttribute(Const.AUTENTICADOR);
 		model.addAttribute("solicitacoesPassaporte", solicitacaoPassaporteService.buscarPorUsuario(usuario.getId()));
 		model.addAttribute("solicitacoesVisto", solicitacaoVistoService.buscarPorUsuario(usuario.getId()));
 		return "solicitacao/acompanhamento";

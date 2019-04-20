@@ -124,12 +124,12 @@ public class SolicitacaoVistoJdbcDao implements SolicitacaoVistoDao {
 	}
 
 	@Override
-	public void recusar(SolicitacaoVisto solicitacaoVisto) {
+	public boolean alterarStatusEMotivoRecusa(SolicitacaoVisto solicitacaoVisto) {
 		MapSqlParameterSource parameters = new MapSqlParameterSource();
 		parameters.addValue("id", solicitacaoVisto.getId());
 		parameters.addValue("status", solicitacaoVisto.getStatus().name());
 		parameters.addValue("motivoRecusa", solicitacaoVisto.getMotivoRecusa());
 
-		jdbcTemplate.update(QueryUtil.getQueryByName("solicitacao.visto.recusar"), parameters);
+		return jdbcTemplate.update(QueryUtil.getQueryByName("solicitacao.visto.alterar.status.e.motivo.recusa"), parameters) == 1;
 	}
 }

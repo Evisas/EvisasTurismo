@@ -120,12 +120,12 @@ public class SolicitacaoPassaporteJdbcDao implements SolicitacaoPassaporteDao {
 	}
 
 	@Override
-	public boolean recusar(SolicitacaoPassaporte solicitacaoPassaporte) {
+	public boolean alterarStatusEMotivoRecusa(SolicitacaoPassaporte solicitacaoPassaporte) {
 		MapSqlParameterSource parameters = new MapSqlParameterSource();
 		parameters.addValue("id", solicitacaoPassaporte.getId());
 		parameters.addValue("status", solicitacaoPassaporte.getStatus().name());
 		parameters.addValue("motivoRecusa", solicitacaoPassaporte.getMotivoRecusa());
 
-		return jdbcTemplate.update(QueryUtil.getQueryByName("solicitacao.passaporte.recusar"), parameters) == 1;
+		return jdbcTemplate.update(QueryUtil.getQueryByName("solicitacao.passaporte.alterar.status.e.motivo.recusa"), parameters) == 1;
 	}
 }

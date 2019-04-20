@@ -13,6 +13,6 @@ public interface SolicitacaoVistoDao {
 	SolicitacaoVisto buscarPorId(long id);
 	boolean alterarStatus(SolicitacaoVisto solicitacaoVisto);
 	boolean alterarStatusVerificaUsuario(SolicitacaoVisto solicitacaoVisto);
-	void recusar(SolicitacaoVisto solicitacaoVisto);
+	boolean alterarStatusEMotivoRecusa(SolicitacaoVisto solicitacaoVisto);
 
 }

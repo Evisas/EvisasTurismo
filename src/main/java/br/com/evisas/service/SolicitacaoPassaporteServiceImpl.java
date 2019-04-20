@@ -88,4 +88,16 @@ public class SolicitacaoPassaporteServiceImpl implements SolicitacaoPassaporteSe
 	public List<SolicitacaoPassaporte> listar() {
 		return solicitacaoPassaporteDao.listar();
 	}
+
+	@Override
+	public void alterarStatusEMotivoRecusa(SolicitacaoPassaporte solicitacaoPassaporte, Autenticador autenticador) {
+		if (!autenticador.isFuncionario()) {
+			throw new BusinessException("msg.erro.permissao.acesso.solicitacao");
+		}
+
+		boolean alterou = solicitacaoPassaporteDao.alterarStatusEMotivoRecusa(solicitacaoPassaporte);
+		if (!alterou) {
+			throw new BusinessException("msg.erro.alterar.status.solicitacao");
+		}
+	}
 }

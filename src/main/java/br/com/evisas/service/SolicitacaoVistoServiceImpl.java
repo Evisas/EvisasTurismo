@@ -140,4 +140,16 @@ public class SolicitacaoVistoServiceImpl implements SolicitacaoVistoService {
 	public List<SolicitacaoVisto> listar() {
 		return solicitacaoVistoDao.listar();
 	}
+
+	@Override
+	public void alterarStatusEMotivoRecusa(SolicitacaoVisto solicitacaoVisto, Autenticador autenticador) {
+		if (!autenticador.isFuncionario()) {
+			throw new BusinessException("msg.erro.permissao.acesso.solicitacao");
+		}
+
+		boolean alterou = solicitacaoVistoDao.alterarStatusEMotivoRecusa(solicitacaoVisto);
+		if (!alterou) {
+			throw new BusinessException("msg.erro.alterar.status.solicitacao");
+		}
+	}
 }

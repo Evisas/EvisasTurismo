@@ -39,7 +39,7 @@ public class ProjectConfig implements WebMvcConfigurer {
 
 		registry.addInterceptor(new FuncionarioAutenticationInterceptor())
 								.addPathPatterns("/admin/**")
-								.excludePathPatterns("/admin")
-								.excludePathPatterns("/admin/login");
+								.excludePathPatterns("/admin",
+													 "/admin/login");
 	}
 }

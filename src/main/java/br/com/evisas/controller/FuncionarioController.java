@@ -33,14 +33,14 @@ public class FuncionarioController {
 	}
 
 	@PostMapping("/login")
-	@HandleBusinessError(errorPage="usuario/login")
+	@HandleBusinessError(errorPage="admin/login")
 	public String fazerLogin(@Valid Funcionario funcionario, BindingResult result, HttpSession session) {
 		if (result.hasFieldErrors("matricula") || result.hasFieldErrors("senha")) {
 			return "admin/login";
 		}
 
 		Funcionario funcionarioBuscado = funcionarioServices.buscarPeloLogin(funcionario);
-		session.setAttribute(Const.FUNCIONARIO, funcionarioBuscado);
+		session.setAttribute(Const.AUTENTICADOR, funcionarioBuscado);
 		return "redirect:home";
 	}
 

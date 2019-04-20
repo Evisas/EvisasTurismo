@@ -15,7 +15,7 @@
 
 <body>
 	<div id="header">
-		<jsp:include page="../fragment/usuario-navegacao.jsp">
+		<jsp:include page="${autenticador.funcionario ? '../fragment/admin-navegacao.jsp' : '../fragment/usuario-navegacao.jsp'}">
 			<jsp:param name="TELA" value="${param.TIPO_SOLICITACAO eq 'PASSAPORTE' ? 'SOLIC_PASS' : 'SOLIC_VISTO'}"/>
 		</jsp:include>
 	</div>
@@ -30,15 +30,23 @@
 				   enctype="${param.HAS_FILE ? 'multipart/form-data' : 'application/x-www-form-urlencoded'}" 
 				   novalidate="true">
 
+			<form:hidden id="idSolicitacao" path="id" />
+
 			<c:if test="${not ESTAH_CRIANDO_SOLICITACAO}">
 				<div class="badge badge-secondary text-wrap">Data da Solicitação: ${solicitacao.dataSolicitacaoFormatada}</div><br/>
 				<strong>Status: ${solicitacao.status}</strong>
-				<br /><br />
+				<br />
 			</c:if>
-
-			<form:hidden id="idSolicitacao" path="id" />
-
 			<div class="text-left">
+				<c:if test="${not empty solicitacao.motivoRecusa}">
+					<br />
+					<div class="alert alert-danger" role="alert">
+						<h5 class="alert-heading">Motivo da Recusa:</h5>
+						<p>${solicitacao.motivoRecusa}</p>
+					</div>
+				</c:if>
+				<hr />
+
 				<c:choose>
 				<c:when test="${param.TIPO_SOLICITACAO eq 'PASSAPORTE'}"><%@include file="../fragment/form-solicitacao-passaporte.jspf"%></c:when>
 				<c:when test="${param.TIPO_SOLICITACAO eq 'VISTO'}"><%@include file="../fragment/form-solicitacao-visto.jspf"%></c:when>
@@ -52,5 +60,8 @@
 	</div>
 	
 	<div id="footer"></div>
+
+	<%@include file="../fragment/modal-confirmacao.jspf"%>
+	<%@include file="../fragment/modal-recusa.jspf"%>
 </body>
 </html>

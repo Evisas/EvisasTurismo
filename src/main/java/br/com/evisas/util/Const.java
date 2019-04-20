@@ -4,8 +4,7 @@ public class Const {
 	public static final String STR_COD_MSG_ERRO = "codigoMsgErro";
 	public static final String STR_COD_MSG_SUCESSO = "codigoMsgSucesso";
 	
-	public static final String USUARIO = "usuario";
-	public static final String FUNCIONARIO = "funcionario";
+	public static final String AUTENTICADOR = "autenticador";
 	public static final String SOLICITACAO = "solicitacao";
-	public static final String EH_EDICAO = "ehEdicao"; // em caso de erro, volta para tela de consulta com campos habilitados para edição
+	public static final String EH_EDICAO = "ehEdicao"; // em caso de erro, volta para tela de consulta com campos habilitados para ediÃ§Ã£o
 }

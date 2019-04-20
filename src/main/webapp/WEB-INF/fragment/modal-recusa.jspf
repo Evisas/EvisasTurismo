@@ -1,0 +1,44 @@
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+
+<div id="modal-recusa" class="modal" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Recusar Solicitação:</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body text-left">
+				<form:form id="recusaSolicitacao" methodParam="post" action="recusaSolicitacao${param.COMPL_TIPO_SOLICITACAO}" modelAttribute="solicitacao" cssClass="" novalidate="true">
+		
+					<form:hidden path="id" />
+					
+					<div class="form-group">
+					<spring:bind path="motivoRecusa">
+						<label for="motivoRecusaModal">Motivo da Recusa:</label><br />
+						<form:textarea id="motivoRecusaModal" path="motivoRecusa" maxlength="100" cssClass="form-control" required="required"/>
+						<small class="form-text text-muted" target="motivoRecusa">Máximo de 100 caracteres.</small>
+						<div class="invalid-feedback"><form:errors path="motivoRecusa" /></div>
+					</spring:bind>
+					</div>
+				
+				</form:form>
+	
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+				<button type="button" class="btn btn-primary">Recusar</button>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){
+	$("form#recusaSolicitacao").validate();
+	$("#modal-recusa .btn-primary").click(function(){
+		$("#modal-recusa form").submit();
+	});
+});
+</script>

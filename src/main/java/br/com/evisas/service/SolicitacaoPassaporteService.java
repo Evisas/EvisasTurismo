@@ -11,5 +11,6 @@ public interface SolicitacaoPassaporteService {
 	List<SolicitacaoPassaporte> buscarPorUsuario(long idUsuario);
 	SolicitacaoPassaporte buscarPorId(long id, Autenticador autenticador);
 	void alterarStatus(SolicitacaoPassaporte solicitacaoPassaporte, Autenticador autenticador);
+	void alterarStatusEMotivoRecusa(SolicitacaoPassaporte solicitacaoPassaporte, Autenticador autenticador);
 	List<SolicitacaoPassaporte> listar();
 }

@@ -97,13 +97,13 @@
 		$('.cpf').mask('000.000.000-00');
 		$('.matricula').mask('0000');
 		aplicarMascaraTelefone8ou9digitos('.telefone');
+		$("form").validate();
 		$("input[type='date']").rules( "add", {	// mensagem personalizada para validação do tipo 'data'
 			messages: {
 				min: formatarMsgValidacaoComData("<spring:message code='msg.erro.data.deve.ser.posterior.ou.igual' />"),
 				max: formatarMsgValidacaoComData("<spring:message code='msg.erro.data.deve.ser.anterior.ou.igual' />")
 			}
 		});
-		$("form").validate();
 	});
 	</script>
 </head>
