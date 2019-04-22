@@ -111,7 +111,7 @@ public class SolicitacaoVistoController {
 	@GetMapping("admin/solicitacoesVisto")
 	public String mostrarTelaSolicitacoesVisto(Model model) {
 		model.addAttribute("solicitacoesVisto", solicitacaoVistoService.listar());
-		return "admin/solicitacoesVisto";
+		return "solicitacao/solicitacoesVisto";
 	}
 
 	@GetMapping("admin/consultaSolicitacaoVisto")

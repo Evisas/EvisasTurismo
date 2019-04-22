@@ -95,7 +95,7 @@
 	]]></query>
 	<query name="solicitacao.passaporte.alterar.status.e.motivo.recusa"><![CDATA[
 		UPDATE solicitacoesPassaporte
-		SET	status 		 = :status,
+		SET status 		 = :status,
 			motivoRecusa = :motivoRecusa
 		WHERE id = :id
 	]]></query>

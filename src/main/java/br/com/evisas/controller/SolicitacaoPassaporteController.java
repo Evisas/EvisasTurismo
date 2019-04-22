@@ -91,7 +91,7 @@ public class SolicitacaoPassaporteController {
 	@GetMapping("admin/solicitacoesPassaporte")
 	public String mostrarTelaSolicitacoesPassaporte(Model model) {
 		model.addAttribute("solicitacoesPassaporte", solicitacaoPassaporteService.listar());
-		return "admin/solicitacoesPassaporte";
+		return "solicitacao/solicitacoesPassaporte";
 	}
 
 	@GetMapping("admin/consultaSolicitacaoPassaporte")

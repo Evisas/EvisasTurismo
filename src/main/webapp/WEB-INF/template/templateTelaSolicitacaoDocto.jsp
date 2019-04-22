@@ -36,16 +36,17 @@
 				<div class="badge badge-secondary text-wrap">Data da Solicitação: ${solicitacao.dataSolicitacaoFormatada}</div><br/>
 				<strong>Status: ${solicitacao.status}</strong>
 				<br />
-			</c:if>
-			<div class="text-left">
 				<c:if test="${not empty solicitacao.motivoRecusa}">
 					<br />
-					<div class="alert alert-danger" role="alert">
+					<div class="alert alert-danger text-left" role="alert">
 						<h5 class="alert-heading">Motivo da Recusa:</h5>
 						<p>${solicitacao.motivoRecusa}</p>
 					</div>
 				</c:if>
 				<hr />
+			</c:if>
+			
+			<div class="text-left">
 
 				<c:choose>
 				<c:when test="${param.TIPO_SOLICITACAO eq 'PASSAPORTE'}"><%@include file="../fragment/form-solicitacao-passaporte.jspf"%></c:when>

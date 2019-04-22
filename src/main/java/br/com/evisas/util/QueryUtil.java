@@ -77,9 +77,10 @@ public class QueryUtil {
 	}
 
 	private static String tratarQuery(String query) {
-		return query.replaceAll("\t", "")	// retira a tabulação
-					.replaceAll("\r", "")	// retira o 'carrie return' (alguns servidores colocam, outros não)
-					.replaceAll("\n", " ")	// substitui a quebra de linha por um espaço
-					.trim();				// remove espaços, tabulação e quebras de linhas antes e depois da query
+		return query.replaceAll("[\t\r\n ]+", " ").trim();
+//		return query.replaceAll("\t", "")	// retira a tabulação
+//					.replaceAll("\r", "")	// retira o 'carrie return' (alguns servidores colocam, outros não)
+//					.replaceAll("\n", " ")	// substitui a quebra de linha por um espaço
+//					.trim();				// remove espaços, tabulação e quebras de linhas antes e depois da query
 	}
 }
