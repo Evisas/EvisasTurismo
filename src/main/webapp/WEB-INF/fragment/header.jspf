@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-<%-- 
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
---%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> <!-- Corrige acentuação vinda do javascript -->
 
 <%-- Includes TAGLIBs --%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" 	 prefix="c" %>
@@ -28,6 +26,10 @@
 	<!-- Includes Jquery Validation -->
 	<script type="text/javascript" src="/js/validation/jquery.validate.min.js"></script>
 	<script type="text/javascript" src="/js/validation/additional-methods.min.js"></script>
+	
+	<!-- Includes DataTable (obs.: DataTable precisa do bootstrap e jquery) -->
+	<link rel="stylesheet" type="text/css" href="/dataTables/1.10.18/css/jquery.dataTables.min.css"/>
+	<script type="text/javascript" src="/dataTables/1.10.18/js/jquery.dataTables.min.js"></script>
 	
 	<link rel="stylesheet" href="/css/style.css">
 	<script type="text/javascript" src="/js/utilFunctions.js"></script>
@@ -102,6 +104,23 @@
 			messages: {
 				min: formatarMsgValidacaoComData("<spring:message code='msg.erro.data.deve.ser.posterior.ou.igual' />"),
 				max: formatarMsgValidacaoComData("<spring:message code='msg.erro.data.deve.ser.anterior.ou.igual' />")
+			}
+		});
+		$("table.solicitacoes").DataTable({
+			stateSave: true, // salva as configurações da tabela (ordenação, paginação) quando o usuário navega no site e volta para a página
+			"language": {
+				"lengthMenu": "Mostrar _MENU_ itens por página",
+				"zeroRecords": "Desculpe, não há itens para mostrar!",
+				"info": "Mostrando página _PAGE_ de _PAGES_",
+//				"infoEmpty": "No records available",
+				"infoFiltered": "(filtrado de um total de _MAX_ registros)",
+				"search": "Busca:",
+				"paginate": {
+					"first":      "Primeira",
+					"last":       "Última",
+					"next":       "Próxima",
+					"previous":   "Anterior"
+				}
 			}
 		});
 	});
