@@ -47,7 +47,9 @@ public class SolicitacaoVistoServiceImpl implements SolicitacaoVistoService {
 		try {
 			long id = solicitacaoVistoDao.criar(solicitacaoVisto);
 			solicitacaoVisto.setId(id);
-			fileService.gravarArquivo(montarPathDoctoSolicitacaoVisto(solicitacaoVisto), solicitacaoVisto.getDocumento());
+			if (!solicitacaoVisto.getDocumento().isEmpty()) {
+				fileService.gravarArquivo(montarPathDoctoSolicitacaoVisto(solicitacaoVisto), solicitacaoVisto.getDocumento());
+			}
 		} catch (BusinessException e) {
 			solicitacaoVisto.setStatus(null);
 			solicitacaoVisto.setDataSolicitacao(null);
