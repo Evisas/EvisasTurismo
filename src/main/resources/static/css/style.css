@@ -69,3 +69,11 @@ input[type=number] {
 {
 	color: white;
 }
+.img-h-250
+{
+	height: 250px;
+}
+.img-h-200
+{
+	height: 200px;
+}
